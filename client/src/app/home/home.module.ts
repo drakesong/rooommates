@@ -10,7 +10,6 @@ import { HomePageComponent } from './home-page/home-page.component';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    CommonModule,
     RouterModule
   ]
 })

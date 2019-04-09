@@ -36,19 +36,10 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    margin-left: -35%;
-    margin-bottom: -50px;
-    width: 110%;
-    opacity: .85
-}
-
-.fog-low img {
-    width: 100%
-}
-
-.fog-low.right {
-    margin-left: 30%;
-    opacity: 1
+    margin-left: -20%;
+    width: 90%;
+    opacity: .75;
+    z-index: -1;
 }
 
 .title {
@@ -61,45 +52,24 @@
 }
 
 .home-title {
-    font-size: 8em;
+    font-size: 4em;
     font-weight: 700;
     margin: 0;
     color: #fff;
-    background: linear-gradient(to bottom,#fff 35%,#4e6773 100%);
+    background: linear-gradient(to bottom,#fff 0%,#4e6773 150%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent
 }
 
-.home-subtitle {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 1.7em;
-    color: #fff
-}
-
 .moving-clouds {
     position: absolute;
-    z-index: 1;
-    bottom: 0;
+    z-index: -1;
+    bottom: -10%;
     left: 0;
     width: 250.625em;
     height: 43.75em;
     -webkit-animation: 80s linear infinite cloudLoop;
     animation: 80s linear infinite cloudLoop
-}
-
-.text-center {
-    text-align: center!important
-}
-
-.moving-clouds {
-  position: absolute;
-  z-index: 1;
-  bottom: 0;
-  left: 0;
-  width: 250.625em;
-  height: 43.75em;
-  -webkit-animation: cloudLoop 80s linear infinite;
-  animation: cloudLoop 80s linear infinite;
 }
 
 @keyframes cloudLoop {
