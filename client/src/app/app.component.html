@@ -1,9 +1,8 @@
-
 <mat-drawer-container class="container" autosize>
     <mat-drawer #drawer class='sidenav'>
-        <p>
-            Menu
-        </p>
+        <button color="primary" mat-button routerLink="/profile">Profile</button>
+        <button color="primary" mat-button routerLink="/explore">Explore</button>
+        <button color="primary" mat-button routerLink="/chat">Chat</button>
     </mat-drawer>
     <div class="sidenav-content">
         <mat-toolbar color="primary">
@@ -11,7 +10,7 @@
                 <button mat-icon-button (click)="drawer.toggle()">
                     <mat-icon>menu</mat-icon>
                 </button>
-
+                <router-outlet></router-outlet>
                 <span>Roommates</span>
                 <span class="spacer"></span>
             </mat-toolbar-row>
