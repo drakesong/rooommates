@@ -1,19 +1,22 @@
-<mat-drawer-container class="container" autosize>
-    <mat-drawer #drawer class='sidenav'>
-        <button color="primary" mat-button routerLink="/profile">Profile</button>
-        <button color="primary" mat-button routerLink="/explore">Explore</button>
-        <button color="primary" mat-button routerLink="/chat">Chat</button>
-    </mat-drawer>
-    <div class="sidenav-content">
-        <mat-toolbar color="primary">
-            <mat-toolbar-row>
-                <button mat-icon-button (click)="drawer.toggle()">
-                    <mat-icon>menu</mat-icon>
-                </button>
-                <span>Roommates</span>
-                <span class="spacer"></span>
-            </mat-toolbar-row>
-        </mat-toolbar>
+<nav class="navbar fixed-top navbar-transparent" color-on-scroll="500">
+    <div class="container">
+        <a class="navbar-brand" routerLink="/home">Roommates</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" rel="tooltip" title="Go to your Profile" data-placement="bottom" routerLink="/profile">
+                    <i class="material-icons">face</i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" rel="tooltip" title="Explore Roommates" data-placement="bottom" routerLink="/explore">
+                    <i class="material-icons">explore</i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" rel="tooltip" title="Chat with your Matches" data-placement="bottom" routerLink="/chat">
+                    <i class="material-icons">chat</i>
+                </a>
+            </li>
+        </ul>
     </div>
-    <router-outlet></router-outlet>
-</mat-drawer-container>
+</nav>

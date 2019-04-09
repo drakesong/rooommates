@@ -1,21 +1,39 @@
-.container {
-    position: absolute;
+.navbar {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+.fixed-top {
+    position: fixed;
     top: 0;
-    left: 0;
     right: 0;
-    bottom: 0;
+    left: 0;
+    z-index: 1030
 }
 
-.container .mat-drawer {
-    min-width: 200px;
+.navbar.navbar-transparent {
+    padding-top: 25px
 }
 
-.spacer {
-    flex: 1 1 auto;
-}
-
-.container .mat-drawer .mat-button {
+.nav-link {
     display: block;
-    width: 100%;
-    text-align: left;
+    padding: .5rem 1rem
+}
+
+.navbar .navbar-nav .nav-item .nav-link {
+    line-height: 1.6;
+    margin: 15px 0;
+    padding: 10px 15px;
+    opacity: .8;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #66615b
 }
