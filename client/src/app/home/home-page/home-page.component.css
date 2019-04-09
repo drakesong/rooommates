@@ -1,0 +1,114 @@
+.wrapper {
+    transition: .33s cubic-bezier(.685,.0473,.346,1);
+    left: 0;
+    background-color: #fff
+}
+
+.section-dark {
+    background-color: #0b1011
+}
+
+.page-header {
+    background-color: #b2afab;
+    background-position: center center;
+    background-size: cover;
+    min-height: 100vh;
+    max-height: 999px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -ms-flex-pack: center
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto
+}
+
+.fog-low {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-left: -35%;
+    margin-bottom: -50px;
+    width: 110%;
+    opacity: .85
+}
+
+.fog-low img {
+    width: 100%
+}
+
+.fog-low.right {
+    margin-left: 30%;
+    opacity: 1
+}
+
+.title {
+    max-width: 730px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    display: block
+}
+
+.home-title {
+    font-size: 8em;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
+    background: linear-gradient(to bottom,#fff 35%,#4e6773 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
+}
+
+.home-subtitle {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.7em;
+    color: #fff
+}
+
+.moving-clouds {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    width: 250.625em;
+    height: 43.75em;
+    -webkit-animation: 80s linear infinite cloudLoop;
+    animation: 80s linear infinite cloudLoop
+}
+
+.text-center {
+    text-align: center!important
+}
+
+.moving-clouds {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  width: 250.625em;
+  height: 43.75em;
+  -webkit-animation: cloudLoop 80s linear infinite;
+  animation: cloudLoop 80s linear infinite;
+}
+
+@keyframes cloudLoop {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
