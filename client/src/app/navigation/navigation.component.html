@@ -1,24 +1,42 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark pl-4 pr-4">
-    <a class="navbar-brand" routerLink="/home">Roommates</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto d-flex flex-row">
-          <li class="nav-item p-3">
-              <a class="nav-link" rel="tooltip" title="Go to your Profile" data-placement="bottom" routerLink="/profile">Profile</a>
-          </li>
-          <li class="nav-item p-3">
-              <a class="nav-link" rel="tooltip" title="Explore Roommates" data-placement="bottom" routerLink="/explore">Explore</a>
-          </li>
-          <li class="nav-item p-3">
-              <a class="nav-link" rel="tooltip" title="Chat with your Matches" data-placement="bottom" routerLink="/chat">Chat</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav ml-auto d-flex flex-row">
-            <li class="nav-item p-3">
-                <a class="nav-link" routerLink="">Sign In</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<div *ngIf="router.url != '/register'">
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark px-4 non-register">
+        <a class="navbar-brand" routerLink="/home">Roommates</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto d-flex flex-row">
+              <li class="nav-item px-3">
+                  <a class="nav-link" rel="tooltip" title="Go to your Profile" data-placement="bottom" routerLink="/profile">Profile</a>
+              </li>
+              <li class="nav-item px-3">
+                  <a class="nav-link" rel="tooltip" title="Explore Roommates" data-placement="bottom" routerLink="/explore">Explore</a>
+              </li>
+              <li class="nav-item px-3">
+                  <a class="nav-link" rel="tooltip" title="Chat with your Matches" data-placement="bottom" routerLink="/chat">Chat</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto d-flex flex-row">
+                <li class="nav-item px-3">
+                    <a class="nav-link" routerLink="">Sign In</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div *ngIf="router.url == '/register'">
+    <nav class="navbar fixed-top navbar-expand-sm navbar-light px-4 register">
+        <a class="navbar-brand" routerLink="/home">Roommates</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto d-flex flex-row">
+                <li class="nav-item px-3">
+                    <a class="nav-link" rel="tooltip" title="If you already have an account..." data-placement="bottom" routerLink="">Sign In</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
