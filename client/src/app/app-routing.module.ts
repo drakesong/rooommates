@@ -6,6 +6,7 @@ const routes: Routes = [
     { path: 'chat', loadChildren: './chat/chat.module#ChatModule' },
     { path: 'explore', loadChildren: './explore/explore.module#ExploreModule' },
     { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' },
+    { path: 'register', loadChildren: './register/register.module#RegisterModule' },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
