@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+    { path: '', component: SignInPageComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
