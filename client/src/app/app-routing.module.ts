@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-    { path: 'home', loadChildren: './home/home.module#HomeModule' },
-    { path: 'chat', loadChildren: './chat/chat.module#ChatModule' },
-    { path: 'explore', loadChildren: './explore/explore.module#ExploreModule' },
-    { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' },
-    { path: 'register', loadChildren: './register/register.module#RegisterModule' },
+    { path: 'home', loadChildren: './home/home.module#HomeModule', data: {animation: 'Home'} },
+    { path: 'chat', loadChildren: './chat/chat.module#ChatModule', data: {animation: 'Chat'} },
+    { path: 'explore', loadChildren: './explore/explore.module#ExploreModule', data: {animation: 'Explore'} },
+    { path: 'profile', loadChildren: './profile/profile.module#ProfileModule', data: {animation: 'Profile'} },
+    { path: 'register', loadChildren: './register/register.module#RegisterModule', data: {animation: 'Register'} },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
