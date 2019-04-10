@@ -7,6 +7,7 @@ const routes: Routes = [
     { path: 'explore', loadChildren: './explore/explore.module#ExploreModule', data: {animation: 'Explore'} },
     { path: 'profile', loadChildren: './profile/profile.module#ProfileModule', data: {animation: 'Profile'} },
     { path: 'register', loadChildren: './register/register.module#RegisterModule', data: {animation: 'Register'} },
+    { path: 'sign-in', loadChildren: './sign-in/sign-in.module#SignInModule', data: {animation: 'SignIn'} },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
