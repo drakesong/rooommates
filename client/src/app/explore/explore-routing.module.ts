@@ -3,10 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
 
 const routes: Routes = [
-    {
-        path: '',
-        component: ExplorePageComponent
-    }
+    { path: '', component: ExplorePageComponent }
 ];
 
 @NgModule({

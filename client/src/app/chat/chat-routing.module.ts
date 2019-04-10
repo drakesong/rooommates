@@ -3,10 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ChatPageComponent } from './chat-page/chat-page.component';
 
 const routes: Routes = [
-    {
-        path: '',
-        component: ChatPageComponent
-    }
+    { path: '', component: ChatPageComponent }
 ];
 
 @NgModule({
