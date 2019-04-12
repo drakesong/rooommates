@@ -12,7 +12,7 @@ import java.util.*;
 import java.security.*;
 
 @RestController
-public class RegisterController {
+public class UserController {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/Roommates";
     static Connection conn = null;
