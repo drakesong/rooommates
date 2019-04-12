@@ -20,11 +20,18 @@ public class RegisterController {
     @RequestMapping(value="/register", method=RequestMethod.POST)
     public ResponseEntity<String> register(@RequestBody String body, HttpServletRequest request) {
         PreparedStatement ps = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+
+        responseHeader.set("Content-Type", "application/json");
         initializeDBConnection();
 
 		try {
 			JSONObject bodyObj = new JSONObject(body);
             String hashedPassword = hashPassword(bodyObj.getString("password"));
+
+            if (checkIfUserExists(bodyObj.getString("email"))) {
+                return new ResponseEntity("{\"message\": \"Email is already registered.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+            }
 
             String query = "INSERT INTO Users (email, password, first_name, last_name) VALUES (?, ?, ?, ?)";
             ps = conn.prepareStatement(query);
@@ -36,13 +43,15 @@ public class RegisterController {
 
             ps.executeUpdate();
             ps.close();
+
+            return new ResponseEntity("{\"message\": \"User has been registered.\"}", responseHeader, HttpStatus.OK);
 		} catch(JSONException e) {
 			e.printStackTrace();
         } catch(SQLException e) {
             e.printStackTrace();
         }
 
-		return new ResponseEntity(null, null, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity("{\"message\": \"Error.\"}", responseHeader, HttpStatus.BAD_REQUEST);
 	}
 
     public static void initializeDBConnection() {
@@ -88,4 +97,24 @@ public class RegisterController {
 		}
 		return builder.toString();
 	}
+
+    public Boolean checkIfUserExists(String email) {
+        try {
+            String query = "SELECT email FROM Users WHERE email=?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
 }
