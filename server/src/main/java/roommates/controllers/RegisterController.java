@@ -29,6 +29,10 @@ public class RegisterController {
 			JSONObject bodyObj = new JSONObject(body);
             String hashedPassword = hashPassword(bodyObj.getString("password"));
 
+            if (!checkPasswords(bodyObj.getString("password"), bodyObj.getString("confirm_password"))) {
+                return new ResponseEntity("{\"message\": \"Passwords do not match.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+            }
+
             if (checkIfUserExists(bodyObj.getString("email"))) {
                 return new ResponseEntity("{\"message\": \"Email is already registered.\"}", responseHeader, HttpStatus.BAD_REQUEST);
             }
@@ -116,5 +120,13 @@ public class RegisterController {
         }
 
         return true;
+    }
+
+    public Boolean checkPasswords(String password, String confirmPassword) {
+        if (password.equals(confirmPassword)) {
+            return true;
+        }
+
+        return false;
     }
 }
