@@ -12,14 +12,14 @@ import java.util.*;
 import java.security.*;
 
 @RestController
-public class RegisterController {
+public class UserController {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/Roommates";
     static Connection conn = null;
 
     @RequestMapping(value="/register", method=RequestMethod.POST)
     public ResponseEntity<String> register(@RequestBody String body, HttpServletRequest request) {
-        PreparedStatement ps = null;
+        PreparedStatement ps_register = null;
         HttpHeaders responseHeader = new HttpHeaders();
 
         responseHeader.set("Content-Type", "application/json");
@@ -38,15 +38,15 @@ public class RegisterController {
             }
 
             String query = "INSERT INTO Users (email, password, first_name, last_name) VALUES (?, ?, ?, ?)";
-            ps = conn.prepareStatement(query);
+            ps_register = conn.prepareStatement(query);
 
-            ps.setString(1, bodyObj.getString("email"));
-            ps.setString(2, hashedPassword);
-            ps.setString(3, bodyObj.getString("first_name"));
-            ps.setString(4, bodyObj.getString("last_name"));
+            ps_register.setString(1, bodyObj.getString("email"));
+            ps_register.setString(2, hashedPassword);
+            ps_register.setString(3, bodyObj.getString("first_name"));
+            ps_register.setString(4, bodyObj.getString("last_name"));
 
-            ps.executeUpdate();
-            ps.close();
+            ps_register.executeUpdate();
+            ps_register.close();
 
             return new ResponseEntity("{\"message\": \"User has been registered.\"}", responseHeader, HttpStatus.OK);
 		} catch(JSONException e) {
@@ -57,6 +57,45 @@ public class RegisterController {
 
 		return new ResponseEntity("{\"message\": \"Error.\"}", responseHeader, HttpStatus.BAD_REQUEST);
 	}
+
+    @RequestMapping(value="/login", method=RequestMethod.GET)
+    public ResponseEntity<String> login(HttpServletRequest request) {
+        PreparedStatement ps_login = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+
+        String email = request.getParameter("email");
+		String password = hashPassword(request.getParameter("password"));
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        if (!checkIfUserExists(email)) {
+            return new ResponseEntity("{\"message\": \"Email is not registered.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+			String query = "SELECT user_id FROM Users WHERE email=? AND password=?";
+            ps_login = conn.prepareStatement(query);
+
+            ps_login.setString(1, email);
+            ps_login.setString(2, password);
+
+            ResultSet rs_login = ps_login.executeQuery();
+
+            if (rs_login.next()) {
+                return new ResponseEntity("{\"message\": \"User has been logged in.\"}", responseHeader, HttpStatus.OK);
+            }
+            ps_login.close();
+            rs_login.close();
+
+            return new ResponseEntity("{\"message\": \"Wrong email/password.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+
+		} catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity("{\"message\": \"Error.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+    }
 
     public static void initializeDBConnection() {
         try {
@@ -109,8 +148,8 @@ public class RegisterController {
 
             ps.setString(1, email);
 
-            ResultSet rs = ps.executeQuery();
-            if (!rs.next()) {
+            ResultSet rs_check = ps.executeQuery();
+            if (!rs_check.next()) {
                 return false;
             } else {
                 return true;
