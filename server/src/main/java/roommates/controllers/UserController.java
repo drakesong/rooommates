@@ -101,12 +101,17 @@ public class UserController {
         try {
             File file = new File("../src/main/java/roommates/configs/dbparams.txt");
             Scanner sc = new Scanner(file);
-            final String USER = sc.nextLine();
-            final String PASSWORD = sc.nextLine();
-            sc. close();
+            try {
+                final String USER = sc.nextLine();
+                final String PASSWORD = sc.nextLine();
+                
+                Class.forName(JDBC_DRIVER);
+                conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            } catch(NoSuchElementException e) {
+                e.printStackTrace();
+            }
 
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            sc.close();
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         } catch(ClassNotFoundException e) {
