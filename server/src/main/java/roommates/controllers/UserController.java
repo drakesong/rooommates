@@ -97,14 +97,16 @@ public class UserController {
         return new ResponseEntity("{\"message\": \"Error.\"}", responseHeader, HttpStatus.BAD_REQUEST);
     }
 
-    public static void initializeDBConnection() {
+
+
+    private static void initializeDBConnection() {
         try {
             File file = new File("../src/main/java/roommates/configs/dbparams.txt");
             Scanner sc = new Scanner(file);
             try {
                 final String USER = sc.nextLine();
                 final String PASSWORD = sc.nextLine();
-                
+
                 Class.forName(JDBC_DRIVER);
                 conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
             } catch(NoSuchElementException e) {
@@ -121,7 +123,7 @@ public class UserController {
         }
     }
 
-    public String hashPassword(String password) {
+    private String hashPassword(String password) {
         MessageDigest digest = null;
 		String hashedPassword = null;
 
@@ -138,7 +140,7 @@ public class UserController {
         return hashedPassword;
     }
 
-    public static String bytesToHex(byte[] in) {
+    private static String bytesToHex(byte[] in) {
 		StringBuilder builder = new StringBuilder();
 		for(byte b: in) {
 			builder.append(String.format("%02x", b));
@@ -146,7 +148,7 @@ public class UserController {
 		return builder.toString();
 	}
 
-    public Boolean checkIfUserExists(String email) {
+    private Boolean checkIfUserExists(String email) {
         try {
             String query = "SELECT email FROM Users WHERE email=?";
             PreparedStatement ps = conn.prepareStatement(query);
@@ -166,7 +168,7 @@ public class UserController {
         return true;
     }
 
-    public Boolean checkPasswords(String password, String confirmPassword) {
+    private Boolean checkPasswords(String password, String confirmPassword) {
         if (password.equals(confirmPassword)) {
             return true;
         }
