@@ -22,6 +22,7 @@ public class UserController {
     public ResponseEntity<String> register(@RequestBody String body, HttpServletRequest request) {
         PreparedStatement ps_register = null;
         HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
 
         responseHeader.set("Content-Type", "application/json");
         initializeDBConnection();
@@ -53,17 +54,20 @@ public class UserController {
             return new ResponseEntity("{\"message\": \"User has been registered.\"}", responseHeader, HttpStatus.OK);
 		} catch(JSONException e) {
 			e.printStackTrace();
+            responseBody.put("message", "JSONException");
         } catch(SQLException e) {
             e.printStackTrace();
+            responseBody.put("message", "SQLException");
         }
 
-		return new ResponseEntity("{\"message\": \"Error.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
 	}
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
     public ResponseEntity<String> login(HttpServletRequest request) {
         PreparedStatement ps_login = null;
         HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
 
         String email = request.getParameter("email");
 		String password = hashPassword(request.getParameter("password"));
@@ -92,18 +96,19 @@ public class UserController {
             conn.close();
 
             return new ResponseEntity("{\"message\": \"Wrong email/password.\"}", responseHeader, HttpStatus.BAD_REQUEST);
-
 		} catch(SQLException e) {
             e.printStackTrace();
+            responseBody.put("message", "SQLException");
         }
 
-        return new ResponseEntity("{\"message\": \"Error.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value="/profile", method=RequestMethod.GET)
     public ResponseEntity<String> profile(HttpServletRequest request) {
         PreparedStatement ps_profile = null;
         HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
 
         responseHeader.set("COntent-Type", "application/json");
         initializeDBConnection();
@@ -143,15 +148,17 @@ public class UserController {
             return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
 		} catch(SQLException e) {
             e.printStackTrace();
+            responseBody.put("message", "SQLException");
         }
 
-        return new ResponseEntity("{\"message\": \"Error.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public ResponseEntity<String> edit(@RequestBody String body, HttpServletRequest request) {
         PreparedStatement ps_edit = null;
         HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
 
         responseHeader.set("Content-Type", "application/json");
         initializeDBConnection();
@@ -188,16 +195,19 @@ public class UserController {
             ps_edit.close();
             conn.close();
 
-            return new ResponseEntity("{\"message\": \"User has been registered.\"}", responseHeader, HttpStatus.OK);
+            return new ResponseEntity("{\"message\": \"Profile has been edited.\"}", responseHeader, HttpStatus.OK);
 		} catch(JSONException e) {
 			e.printStackTrace();
+            responseBody.put("message", "JSONException");
         } catch(SQLException e) {
             e.printStackTrace();
+            responseBody.put("message", "SQLException");
         } catch(ParseException e) {
             e.printStackTrace();
+            responseBody.put("message", "ParseException");
         }
 
-		return new ResponseEntity("{\"message\": \"Error.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
 
