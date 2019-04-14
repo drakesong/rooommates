@@ -48,6 +48,7 @@ public class UserController {
 
             ps_register.executeUpdate();
             ps_register.close();
+            conn.close();
 
             return new ResponseEntity("{\"message\": \"User has been registered.\"}", responseHeader, HttpStatus.OK);
 		} catch(JSONException e) {
@@ -88,6 +89,7 @@ public class UserController {
             }
             ps_login.close();
             rs_login.close();
+            conn.close();
 
             return new ResponseEntity("{\"message\": \"Wrong email/password.\"}", responseHeader, HttpStatus.BAD_REQUEST);
 
@@ -136,9 +138,9 @@ public class UserController {
 
             ps_profile.close();
             rs_profile.close();
+            conn.close();
 
             return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
-
 		} catch(SQLException e) {
             e.printStackTrace();
         }
@@ -184,6 +186,7 @@ public class UserController {
 
             ps_edit.executeUpdate();
             ps_edit.close();
+            conn.close();
 
             return new ResponseEntity("{\"message\": \"User has been registered.\"}", responseHeader, HttpStatus.OK);
 		} catch(JSONException e) {
