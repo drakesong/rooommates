@@ -32,7 +32,7 @@ public class UserController {
 			JSONObject bodyObj = new JSONObject(body);
             String hashedPassword = hashPassword(bodyObj.getString("password"));
 
-            if (!checkPasswords(bodyObj.getString("password"), bodyObj.getString("confirm_password"))) {
+            if (!checkPasswords(bodyObj.getString("password"), bodyObj.getString("confirmPassword"))) {
                 return new ResponseEntity("{\"message\": \"Passwords do not match.\"}", responseHeader, HttpStatus.BAD_REQUEST);
             }
 
@@ -45,8 +45,8 @@ public class UserController {
 
             ps_register.setString(1, bodyObj.getString("email"));
             ps_register.setString(2, hashedPassword);
-            ps_register.setString(3, bodyObj.getString("first_name"));
-            ps_register.setString(4, bodyObj.getString("last_name"));
+            ps_register.setString(3, bodyObj.getString("firstName"));
+            ps_register.setString(4, bodyObj.getString("lastName"));
 
             ps_register.executeUpdate();
             ps_register.close();

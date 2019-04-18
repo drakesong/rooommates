@@ -9,7 +9,6 @@ import { environment } from '../../../environments/environment';
     styleUrls: ['./register-page.component.css']
 })
 export class RegisterPageComponent implements OnInit {
-
     user: Object = {}
 
     constructor(private http: HttpClient) { }
@@ -28,10 +27,10 @@ export class RegisterPageComponent implements OnInit {
         console.log(this.user);
 
         this.http.post(environment.API_BASE_URL + "register", requestBody, httpOptions)
-        .subscribe(data => {
-            console.log(data['message']);
+        .subscribe(response => {
+            console.log(response['message']);
         }, error => {
-            console.log(error);
+            alert(error.error.message);
         });
     }
 }
