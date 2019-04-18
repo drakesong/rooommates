@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 import { NavigationComponent } from './navigation/navigation.component';
 
@@ -15,8 +17,10 @@ import { NavigationComponent } from './navigation/navigation.component';
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     LayoutModule,
+    HttpClientModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,

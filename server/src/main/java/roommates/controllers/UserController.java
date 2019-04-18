@@ -12,6 +12,7 @@ import java.util.*;
 import java.text.*;
 import java.security.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class UserController {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -31,7 +32,7 @@ public class UserController {
 			JSONObject bodyObj = new JSONObject(body);
             String hashedPassword = hashPassword(bodyObj.getString("password"));
 
-            if (!checkPasswords(bodyObj.getString("password"), bodyObj.getString("confirm_password"))) {
+            if (!checkPasswords(bodyObj.getString("password"), bodyObj.getString("confirmPassword"))) {
                 return new ResponseEntity("{\"message\": \"Passwords do not match.\"}", responseHeader, HttpStatus.BAD_REQUEST);
             }
 
@@ -44,8 +45,8 @@ public class UserController {
 
             ps_register.setString(1, bodyObj.getString("email"));
             ps_register.setString(2, hashedPassword);
-            ps_register.setString(3, bodyObj.getString("first_name"));
-            ps_register.setString(4, bodyObj.getString("last_name"));
+            ps_register.setString(3, bodyObj.getString("firstName"));
+            ps_register.setString(4, bodyObj.getString("lastName"));
 
             ps_register.executeUpdate();
             ps_register.close();
@@ -63,23 +64,25 @@ public class UserController {
 		return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
 	}
 
-    @RequestMapping(value="/login", method=RequestMethod.GET)
-    public ResponseEntity<String> login(HttpServletRequest request) {
+    @RequestMapping(value="/login", method=RequestMethod.POST)
+    public ResponseEntity<String> login(@RequestBody String body, HttpServletRequest request) {
         PreparedStatement ps_login = null;
         HttpHeaders responseHeader = new HttpHeaders();
         JSONObject responseBody = new JSONObject();
 
-        String email = request.getParameter("email");
-		String password = hashPassword(request.getParameter("password"));
-
         responseHeader.set("Content-Type", "application/json");
         initializeDBConnection();
 
-        if (!checkIfUserExists(email)) {
-            return new ResponseEntity("{\"message\": \"Email is not registered.\"}", responseHeader, HttpStatus.BAD_REQUEST);
-        }
 
         try {
+            JSONObject bodyObj = new JSONObject(body);
+            String email = bodyObj.getString("email");
+            String password = hashPassword(bodyObj.getString("password"));
+
+            if (!checkIfUserExists(email)) {
+                return new ResponseEntity("{\"message\": \"Email is not registered.\"}", responseHeader, HttpStatus.BAD_REQUEST);
+            }
+
 			String query = "SELECT user_id FROM Users WHERE email=? AND password=?";
             ps_login = conn.prepareStatement(query);
 
@@ -110,7 +113,7 @@ public class UserController {
         HttpHeaders responseHeader = new HttpHeaders();
         JSONObject responseBody = new JSONObject();
 
-        responseHeader.set("COntent-Type", "application/json");
+        responseHeader.set("Content-Type", "application/json");
         initializeDBConnection();
 
         String email = request.getParameter("email");

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
 
@@ -11,6 +12,7 @@ import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
   imports: [
     CommonModule,
     SignInRoutingModule,
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule

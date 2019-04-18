@@ -5,18 +5,22 @@
                 <div class="col-lg-4 col-sm-6 mr-auto ml-auto">
                   <div class="card card-register">
                       <h3 class="title">Sign In</h3>
-                      <mat-form-field>
-                          <input matInput placeholder="Email" required/>
-                      </mat-form-field>
-                      <mat-form-field>
-                          <input matInput placeholder="Password" required/>
-                      </mat-form-field>
-                      <br/>
-                      <div class="text-center">
-                          <button mat-raised-button color="primary">Sign In</button>
-                          <br/>
-                          <button mat-button>Forgot Password</button>
-                      </div>
+                      <form #f="ngForm" (ngSubmit)="onLogin()">
+                          <div class="login-fields">
+                              <mat-form-field>
+                                  <input matInput type="email" [(ngModel)]="user.email" placeholder="Email" name="email" email required/>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput type="password" [(ngModel)]="user.password" placeholder="Password" name="password" required/>
+                              </mat-form-field>
+                              <br/>
+                              <div class="text-center">
+                                  <button mat-raised-button color="primary" type="submit" [disabled]="!f.form.valid">Sign In</button>
+                                  <br/>
+                                  <button mat-button>Forgot Password</button>
+                              </div>
+                          </div>
+                      </form>
                   </div>
                 </div>
             </div>

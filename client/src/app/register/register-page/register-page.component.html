@@ -1,24 +1,24 @@
 <div class="container-background">
     <div class="background-image" style="background-image: url('assets/img/couple-freedom-friends-1066801.jpg');"></div>
-    <div class="register-form">
+    <form #f="ngForm" (ngSubmit)="onRegister()" class="register-form">
         <div class="register-fields">
             <h3>Welcome</h3>
             <mat-form-field>
-                <input matInput placeholder="First Name" required/>
+                <input matInput type="text" [(ngModel)]="user.firstName" placeholder="First Name" name="firstName" required/>
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Last Name" required/>
+                <input matInput type="text" [(ngModel)]="user.lastName" placeholder="Last Name" name="lastName" required/>
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Email" required/>
+                <input matInput type="email" [(ngModel)]="user.email"  placeholder="Email" name="email" email required/>
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Password" required/>
+                <input matInput type="password" [(ngModel)]="user.password" placeholder="Password" name="password" required/>
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Confirm Password" required/>
+                <input matInput type="password" [(ngModel)]="user.confirmPassword" placeholder="Confirm Password" name="confirmPassword" required/>
             </mat-form-field>
-            <button class="register-button" mat-raised-button color="primary">Register</button>
+            <button class="register-button" mat-raised-button color="primary" type="submit" [disabled]="!f.form.valid">Register</button>
         </div>
-    </div>
+    </form>
 </div>
