@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
 
@@ -11,6 +12,7 @@ import { RegisterPageComponent } from './register-page/register-page.component';
   imports: [
     CommonModule,
     RegisterRoutingModule,
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule
