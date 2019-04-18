@@ -12,6 +12,7 @@ import java.util.*;
 import java.text.*;
 import java.security.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class UserController {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -110,7 +111,7 @@ public class UserController {
         HttpHeaders responseHeader = new HttpHeaders();
         JSONObject responseBody = new JSONObject();
 
-        responseHeader.set("COntent-Type", "application/json");
+        responseHeader.set("Content-Type", "application/json");
         initializeDBConnection();
 
         String email = request.getParameter("email");
