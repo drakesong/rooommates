@@ -24,13 +24,12 @@ export class RegisterPageComponent implements OnInit {
         };
 
         let requestBody = this.user;
-        console.log(this.user);
 
         this.http.post(environment.API_BASE_URL + "register", requestBody, httpOptions)
-        .subscribe(response => {
-            console.log(response['message']);
-        }, error => {
-            alert(error.error.message);
-        });
+            .subscribe(response => {
+                console.log(response['message']);
+            }, error => {
+                alert(error.error.message);
+            });
     }
 }
