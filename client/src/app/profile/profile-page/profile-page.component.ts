@@ -27,7 +27,7 @@ export class ProfilePageComponent implements OnInit {
 
         this.http.post(environment.API_BASE_URL + "edit", requestBody, httpOptions)
             .subscribe(response => {
-                console.log(response['message']);
+                alert(response['message']);
             }, error => {
                 alert(error.error.message);
             });
