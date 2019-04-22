@@ -1,3 +1,60 @@
-<p>
-  profile-page works!
-</p>
+<div class="wrapper">
+    <div class="page-header" style="background-image: url('./assets/img/friends-friendship-mountain-1974927.jpg');">
+        <div class="container">
+            <div class="row">
+                <div class="col-8 mr-auto ml-auto">
+                  <div class="card card-register">
+                      <h3 class="title">Profile</h3>
+                      <form #f="ngForm" (ngSubmit)="onLogin()">
+                          <div class="login-fields">
+                              <mat-form-field>
+                                  <input matInput type="email" [(ngModel)]="user.email" placeholder="Email" name="email" email/>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput type="password" [(ngModel)]="user.password" placeholder="New Password" name="password"/>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput type="password" [(ngModel)]="user.confirmPassword" placeholder="Confirm New Password" name="password"/>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput type="text" [(ngModel)]="user.firstName" placeholder="First Name" name="firstName"/>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput type="text" [(ngModel)]="user.lastName" placeholder="Last Name" name="lastName"/>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <textarea matInput type="text" [(ngModel)]="user.description" placeholder="Description" name="description"></textarea>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <mat-select [(ngModel)]="user.gender" placeholder="Gender" name="gender">
+                                      <mat-option value="m">Male</mat-option>
+                                      <mat-option value="f">Female</mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput [(ngModel)]="user.birthdate" [matDatepicker]="picker"  placeholder="Birthdate" name="birthdate"/>
+                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput type="text" [(ngModel)]="user.city" placeholder="City" name="city"/>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput type="text" [(ngModel)]="user.state" placeholder="State" name="state"/>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput type="text" [(ngModel)]="user.city" placeholder="City" name="city"/>
+                              </mat-form-field>
+                              <br/>
+                              <div class="text-center">
+                                  <button mat-raised-button color="primary" type="submit">Update</button>
+                                  <br/>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
