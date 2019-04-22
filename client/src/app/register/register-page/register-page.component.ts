@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -12,7 +13,7 @@ export class RegisterPageComponent implements OnInit {
     user: Object = {}
     hide = true;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     ngOnInit() {
     }
@@ -28,7 +29,8 @@ export class RegisterPageComponent implements OnInit {
 
         this.http.post(environment.API_BASE_URL + "register", requestBody, httpOptions)
             .subscribe(response => {
-                console.log(response['message']);
+                alert(response['message']);
+                this.router.navigate(['sign-in']);
             }, error => {
                 alert(error.error.message);
             });
