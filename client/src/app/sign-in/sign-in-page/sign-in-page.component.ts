@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -10,8 +11,9 @@ import { environment } from '../../../environments/environment';
 })
 export class SignInPageComponent implements OnInit {
     user: Object = {}
+    hide = true;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     ngOnInit() {
     }
@@ -27,7 +29,8 @@ export class SignInPageComponent implements OnInit {
 
         this.http.post(environment.API_BASE_URL + "login", requestBody, httpOptions)
             .subscribe(response => {
-                console.log(response['message']);
+                alert(response['message']);
+                this.router.navigate(['profile']);
             }, error => {
                 alert(error.error.message);
             });

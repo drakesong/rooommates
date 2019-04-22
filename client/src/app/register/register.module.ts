@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule } from '@angular/material';
 
 import { RegisterRoutingModule } from './register-routing.module';
 import { RegisterPageComponent } from './register-page/register-page.component';
@@ -15,7 +15,8 @@ import { RegisterPageComponent } from './register-page/register-page.component';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class RegisterModule { }

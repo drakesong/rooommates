@@ -176,8 +176,8 @@ public class UserController {
             String query = "UPDATE Users SET first_name=?, last_name=?, gender=?, city=?, state=?, birthdate=?, description=?, sleep=?, eat=?, neat=?, social=?, desired_city=?, desired_state=?, desired_gender=?, min_rent=?, max_rent=? WHERE email=?";
             ps_edit = conn.prepareStatement(query);
 
-            ps_edit.setString(1, bodyObj.getString("first_name"));
-            ps_edit.setString(2, bodyObj.getString("last_name"));
+            ps_edit.setString(1, bodyObj.getString("firstName"));
+            ps_edit.setString(2, bodyObj.getString("lastName"));
             ps_edit.setString(3, bodyObj.getString("gender"));
             ps_edit.setString(4, bodyObj.getString("city"));
             ps_edit.setString(5, bodyObj.getString("state"));
@@ -187,11 +187,11 @@ public class UserController {
             ps_edit.setInt(9, bodyObj.getInt("eat"));
             ps_edit.setInt(10, bodyObj.getInt("neat"));
             ps_edit.setInt(11, bodyObj.getInt("social"));
-            ps_edit.setString(12, bodyObj.getString("desired_city"));
-            ps_edit.setString(13, bodyObj.getString("desired_state"));
-            ps_edit.setString(14, bodyObj.getString("desired_gender"));
-            ps_edit.setInt(15, bodyObj.getInt("min_rent"));
-            ps_edit.setInt(16, bodyObj.getInt("max_rent"));
+            ps_edit.setString(12, bodyObj.getString("desiredCity"));
+            ps_edit.setString(13, bodyObj.getString("desiredState"));
+            ps_edit.setString(14, bodyObj.getString("desiredGender"));
+            ps_edit.setInt(15, bodyObj.getInt("minRent"));
+            ps_edit.setInt(16, bodyObj.getInt("maxRent"));
             ps_edit.setString(17, email);
 
             ps_edit.executeUpdate();
