@@ -42,9 +42,30 @@
                               <mat-form-field>
                                   <input matInput type="text" [(ngModel)]="user.state" placeholder="State" name="state"/>
                               </mat-form-field>
+                              <h6>Sleep</h6>
+                              <mat-slider [(ngModel)]="user.sleep" name="sleep" color="primary" thumbLabel tickInterval="1" min="1" max="10"></mat-slider>
+                              <h6>Eat</h6>
+                              <mat-slider [(ngModel)]="user.eat" name="eat" color="primary" thumbLabel tickInterval="1" min="1" max="10"></mat-slider>
+                              <h6>Neat</h6>
+                              <mat-slider [(ngModel)]="user.neat" name="neat" color="primary" thumbLabel tickInterval="1" min="1" max="10"></mat-slider>
+                              <h6>Social</h6>
+                              <mat-slider [(ngModel)]="user.social" name="social" color="primary" thumbLabel tickInterval="1" min="1" max="10"></mat-slider>
                               <mat-form-field>
-                                  <input matInput type="text" [(ngModel)]="user.city" placeholder="City" name="city"/>
+                                  <input matInput type="text" [(ngModel)]="user.desiredCity" placeholder="Desired City" name="desiredCity"/>
                               </mat-form-field>
+                              <mat-form-field>
+                                  <input matInput type="text" [(ngModel)]="user.desiredState" placeholder="Desired State" name="desiredState"/>
+                              </mat-form-field>
+                              <mat-form-field>
+                                  <mat-select [(ngModel)]="user.desiredGender" placeholder="Desired Gender" name="desiredGender">
+                                      <mat-option value="m">Male</mat-option>
+                                      <mat-option value="f">Female</mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+                              <h6>Minimum Rent</h6>
+                              <mat-slider [(ngModel)]="user.minRent" name="minRent" color="primary" thumbLabel tickInterval="100" min="100" max="10000" step="100"></mat-slider>
+                              <h6>Maximum Rent</h6>
+                              <mat-slider [(ngModel)]="user.maxRent" name="maxRent" color="primary" thumbLabel tickInterval="100" min="100" max="10000" step="100"></mat-slider>
                               <br/>
                               <div class="text-center">
                                   <button mat-raised-button color="primary" type="submit">Update</button>

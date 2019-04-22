@@ -1,17 +1,9 @@
 .page-header {
-    background-color: #b2afab;
-    background-position: center center;
+    background: no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    min-height: 100vh;
-    max-height: 999px;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    -ms-flex-pack: center
 }
 
 .card-register {
@@ -24,4 +16,8 @@
 .login-fields {
     display: flex;
     flex-direction: column;
+}
+
+.container {
+    padding-top: 80px;
 }
