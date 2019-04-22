@@ -27,7 +27,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     MatIconModule,
     MatListModule,
     MatInputModule,
-    MatSliderModule
+    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

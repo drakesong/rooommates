@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule } from '@angular/material';
 
 import { SignInRoutingModule } from './sign-in-routing.module';
 import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
@@ -15,7 +15,8 @@ import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class SignInModule { }

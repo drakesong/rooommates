@@ -10,6 +10,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ProfilePageComponent implements OnInit {
     user: Object = {}
+    hide = true;
 
     constructor(private http: HttpClient) { }
 
