@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MatInputModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatSliderModule } from '@angular/material';
+import { MatInputModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatSliderModule, MatCardModule, MatFormFieldModule, MatDialogModule } from '@angular/material';
 import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
@@ -28,6 +28,9 @@ import { NavigationComponent } from './navigation/navigation.component';
     MatListModule,
     MatInputModule,
     MatSliderModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
