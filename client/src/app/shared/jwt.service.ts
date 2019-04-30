@@ -21,13 +21,14 @@ export class JwtService {
           'Content-Type': 'application/json'
         })
       };
-
-      return this.httpClient.post<{access_token: string}>(environment.API_BASE_URL + "login", requestBody, httpOptions).pipe(tap(response => {
+      return this.httpClient.post<{access_token: string}>(environment.API_BASE_URL + "login", requestBody, httpOptions).subscribe(response => {
+          console.log(response.access_token);
         localStorage.setItem('access_token', response.access_token);
         this.router.navigate(['profile']);
       }, error => {
+          console.log(error);
         alert(error.error.message);
-      }));
+      });
   }
 
   register(requestBody: Object) {
@@ -37,7 +38,7 @@ export class JwtService {
       })
     };
 
-    return this.httpClient.post<{access_token: string}>(environment.API_BASE_URL + "register", requestBody, httpOptions).pipe(tap(response => {
+    return this.httpClient.post(environment.API_BASE_URL + "register", requestBody, httpOptions).pipe(tap(response => {
       this.router.navigate(['sign-in']);
     }, error => {
       alert(error.error.message);

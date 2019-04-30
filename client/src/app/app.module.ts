@@ -27,8 +27,7 @@ import { environment } from '../environments/environment';
       config: {
         tokenGetter: function tokenGetter() {
           return localStorage.getItem('access_token');},
-        whitelistedDomains: [environment.API_BASE_URL],
-        blacklistedRoutes: [environment.API_BASE_URL + 'login']
+        whitelistedDomains: [environment.API_BASE_URL]
       }
     }),
     MatToolbarModule,
