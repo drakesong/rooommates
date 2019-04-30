@@ -10,7 +10,6 @@ export class AuthGuardService implements CanActivate {
   constructor(private jwtService: JwtService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-      console.log("hello");
     if (this.jwtService.loggedIn) {
       return true;
     }

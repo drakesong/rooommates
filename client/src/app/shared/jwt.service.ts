@@ -12,7 +12,6 @@ export class JwtService {
   constructor(private httpClient: HttpClient, private router: Router) { }
 
   public get loggedIn(): boolean{
-      console.log(localStorage.getItem('access_token'));
       return localStorage.getItem('access_token') !==  null;
   }
 
