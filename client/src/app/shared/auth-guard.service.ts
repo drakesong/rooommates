@@ -11,16 +11,16 @@ export class AuthGuardService implements CanActivate {
 
   constructor(private jwtService: JwtService, private router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
     if (this.jwtService.loggedIn) {
       this.getLoggedInStatus.next('Sign Out');
-      return observableOf(true);
+      return true;
     }
 
     this.getLoggedInStatus.next('Sign In');
     this.router.navigate(['home']);
     alert("You must be logged in.");
-    return observableOf(false);
+    return false;
   }
 
   checkStatus(): void {
