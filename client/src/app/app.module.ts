@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatSliderModule } from '@angular/material';
 import { NavigationComponent } from './navigation/navigation.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,14 @@ import { NavigationComponent } from './navigation/navigation.component';
     AppRoutingModule,
     LayoutModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: function tokenGetter() {
+          return localStorage.getItem('access_token');},
+        whitelistedDomains: [environment.API_BASE_URL],
+        blacklistedRoutes: [environment.API_BASE_URL + 'login']
+      }
+    }),
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
