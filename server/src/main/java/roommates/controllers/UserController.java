@@ -92,7 +92,7 @@ public class UserController {
             ResultSet rs_login = ps_login.executeQuery();
 
             if (rs_login.next()) {
-                return new ResponseEntity("{\"message\": \"User has been logged in.\"}", responseHeader, HttpStatus.OK);
+                return new ResponseEntity("{\"message\": \"User has been logged in.\",\"access_token\": \"" + email + "\"}", responseHeader, HttpStatus.OK);
             }
             ps_login.close();
             rs_login.close();
