@@ -18,7 +18,7 @@
             </ul>
             <ul class="navbar-nav ml-auto d-flex flex-row">
                 <li class="nav-item px-3">
-                    <a class="nav-link" routerLink="/sign-in">Sign In</a>
+                    <button class="sign-in-out nav-link" (click)="onSignInOut()">{{userStatus}}</button>
                 </li>
             </ul>
         </div>
