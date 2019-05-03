@@ -21,19 +21,7 @@ export class ProfilePageComponent implements OnInit {
     }
 
     onUpdate() {
-        // const httpOptions = {
-        //     headers: new HttpHeaders({
-        //         'Content-Type': 'application/json'
-        //     })
-        // };
-        //
-        // let requestBody = this.user;
-
-        // this.http.post(environment.API_BASE_URL + "edit", requestBody, httpOptions)
-        //     .subscribe(response => {
-        //         alert(response['message']);
-        //     }, error => {
-        //         alert(error.error.message);
-        //     });
+        let requestBody = this.user;
+        this.jwtService.update(requestBody);
     }
 }
