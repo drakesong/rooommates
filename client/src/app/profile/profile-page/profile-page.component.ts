@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { JwtService } from '../../shared/jwt.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -9,28 +9,31 @@ import { environment } from '../../../environments/environment';
     styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent implements OnInit {
-    user: Object = {}
+    user: Object;
     hide = true;
 
-    constructor(private http: HttpClient) { }
+    constructor(private jwtService: JwtService) { }
 
     ngOnInit() {
+        this.user = this.jwtService.getProfile().subscribe(profile => {
+            this.user = profile;
+        });
     }
 
     onUpdate() {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json'
-            })
-        };
+        // const httpOptions = {
+        //     headers: new HttpHeaders({
+        //         'Content-Type': 'application/json'
+        //     })
+        // };
+        //
+        // let requestBody = this.user;
 
-        let requestBody = this.user;
-
-        this.http.post(environment.API_BASE_URL + "edit", requestBody, httpOptions)
-            .subscribe(response => {
-                alert(response['message']);
-            }, error => {
-                alert(error.error.message);
-            });
+        // this.http.post(environment.API_BASE_URL + "edit", requestBody, httpOptions)
+        //     .subscribe(response => {
+        //         alert(response['message']);
+        //     }, error => {
+        //         alert(error.error.message);
+        //     });
     }
 }
