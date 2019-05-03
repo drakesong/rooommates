@@ -36,7 +36,6 @@ export class JwtService {
         'Content-Type': 'application/json'
       })
     };
-    console.log(requestBody);
     return this.httpClient.post(environment.API_BASE_URL + "register", requestBody, httpOptions).subscribe(response => {
       this.router.navigate(['sign-in']);
     }, error => {
