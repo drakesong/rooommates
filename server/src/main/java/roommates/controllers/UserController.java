@@ -128,8 +128,9 @@ public class UserController {
             rs_profile.next();
 
             JSONObject response = new JSONObject();
-            response.put("first_name", rs_profile.getString("first_name") == null ? "" : rs_profile.getString("first_name"));
-            response.put("last_name", rs_profile.getString("last_name") == null ? "" : rs_profile.getString("last_name"));
+            response.put("email", email);
+            response.put("firstName", rs_profile.getString("first_name") == null ? "" : rs_profile.getString("first_name"));
+            response.put("lastName", rs_profile.getString("last_name") == null ? "" : rs_profile.getString("last_name"));
             response.put("gender", rs_profile.getString("gender") == null ? "" : rs_profile.getString("gender"));
             response.put("city", rs_profile.getString("city") == null ? "" : rs_profile.getString("city"));
             response.put("state", rs_profile.getString("state") == null ? "" : rs_profile.getString("state"));
@@ -139,10 +140,11 @@ public class UserController {
             response.put("eat", rs_profile.getString("eat") == null ? "" : rs_profile.getString("eat"));
             response.put("neat", rs_profile.getString("neat") == null ? "" : rs_profile.getString("neat"));
             response.put("social", rs_profile.getString("social") == null ? "" : rs_profile.getString("social"));
-            response.put("desired_city", rs_profile.getString("desired_city") == null ? "" : rs_profile.getString("desired_city"));
-            response.put("desired_state", rs_profile.getString("desired_state") == null ? "" : rs_profile.getString("desired_state"));
-            response.put("desired_gender", rs_profile.getString("desired_gender") == null ? "" : rs_profile.getString("desired_gender"));
-            response.put("min_rent", rs_profile.getString("min_rent") == null ? "" : rs_profile.getString("min_rent"));
+            response.put("desiredCity", rs_profile.getString("desired_city") == null ? "" : rs_profile.getString("desired_city"));
+            response.put("desiredState", rs_profile.getString("desired_state") == null ? "" : rs_profile.getString("desired_state"));
+            response.put("desiredGender", rs_profile.getString("desired_gender") == null ? "" : rs_profile.getString("desired_gender"));
+            response.put("minRent", rs_profile.getString("min_rent") == null ? "" : rs_profile.getString("min_rent"));
+            response.put("maxRent", rs_profile.getString("max_rent") == null ? "" : rs_profile.getString("max_rent"));
 
             ps_profile.close();
             rs_profile.close();

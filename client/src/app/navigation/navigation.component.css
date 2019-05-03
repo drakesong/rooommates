@@ -1,3 +1,8 @@
 .non-register {
     background: rgba(0,0,0,0.25);
 }
+
+.sign-in-out{
+    border: none !important;
+    background: none !important;
+}
