@@ -4,113 +4,29 @@
 <div class="users">
     <div class="container">
     	<div class="row">
-    		<div class="col-lg-3 col-sm-6">
-                <div class="card hovercard">
-                    <div class="avatar">
-                        <img alt="" src="./assets/img/placeholders/9.jpg">
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            <a target="_blank" href="">Jane Doe</a>
-                        </div>
-                        <div class="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                    </div>
-                    <div class="bottom">
-                        <button type="button" class="btn btn-default btn-sm test0">
-                            <i class="material-icons">brightness_3</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test4">
-                            <i class="material-icons">restaurant</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test2">
-                            <i class="material-icons">local_laundry_service</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test3">
-                            <i class="material-icons">people</i>
-                        </button>
-                    </div>
-                </div>
+            <div class="col"></div>
+            <div class="col-5">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>{{potential.firstName}} {{potential.lastName}}</mat-card-title>
+                    </mat-card-header>
+                    <img mat-card-image src={{potential.picture}} alt="User Profile Picture">
+                    <mat-card-content>
+                        <p>{{potential.description}}</p>
+                        <ul>
+                            <li>Sleep: {{potential.sleep}}</li>
+                            <li>Eat: {{potential.sleep}}</li>
+                            <li>Neat: {{potential.sleep}}</li>
+                            <li>Social: {{potential.sleep}}</li>
+                        </ul>
+                    </mat-card-content>
+                    <mat-card-actions class="buttons">
+                        <button mat-raised-button color="primary" (click)="like()">LIKE</button>
+                        <button mat-raised-button color="accent" (click)="dislike()">DISLIKE</button>
+                    </mat-card-actions>
+                </mat-card>
             </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card hovercard">
-                    <div class="avatar">
-                        <img alt="" src="./assets/img/placeholders/8.jpg">
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            <a target="_blank" href="">Bob Jones</a>
-                        </div>
-                        <div class="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                    </div>
-                    <div class="bottom">
-                        <button type="button" class="btn btn-default btn-sm test5">
-                            <i class="material-icons">brightness_3</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test3">
-                            <i class="material-icons">restaurant</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test4">
-                            <i class="material-icons">local_laundry_service</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test5">
-                            <i class="material-icons">people</i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card hovercard">
-                    <div class="avatar">
-                        <img alt="" src="./assets/img/placeholders/7.jpg">
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            <a target="_blank" href="">Jim Daves</a>
-                        </div>
-                        <div class="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                    </div>
-                    <div class="bottom">
-                        <button type="button" class="btn btn-default btn-sm test2">
-                            <i class="material-icons">brightness_3</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test1">
-                            <i class="material-icons">restaurant</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test2">
-                            <i class="material-icons">local_laundry_service</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test3">
-                            <i class="material-icons">people</i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card hovercard">
-                    <div class="avatar">
-                        <img alt="" src="./assets/img/placeholders/6.jpg">
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            <a target="_blank" href="">Sam Williams</a>
-                        </div>
-                        <div class="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                    </div>
-                    <div class="bottom">
-                        <button type="button" class="btn btn-default btn-sm test3">
-                            <i class="material-icons">brightness_3</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test3">
-                            <i class="material-icons">restaurant</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test3">
-                            <i class="material-icons">local_laundry_service</i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm test3">
-                            <i class="material-icons">people</i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <div class="col"></div>
     	</div>
     </div>
+</div>
