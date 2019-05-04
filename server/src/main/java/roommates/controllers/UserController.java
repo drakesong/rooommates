@@ -132,7 +132,7 @@ public class UserController {
             response.put("firstName", rs_profile.getString("first_name") == null ? "" : rs_profile.getString("first_name"));
             response.put("lastName", rs_profile.getString("last_name") == null ? "" : rs_profile.getString("last_name"));
             response.put("gender", rs_profile.getString("gender") == null ? "" : rs_profile.getString("gender"));
-            response.put("zipcode", rs_profile.getInt("zipcode") == 0 ? "" : rs_profile.getInt("zipcode"));
+            response.put("zipcode", rs_profile.getString("zipcode") == null ? "" : rs_profile.getString("zipcode"));
             response.put("birthdate", rs_profile.getString("birthdate") == null ? "" : rs_profile.getString("birthdate"));
             response.put("description", rs_profile.getString("description") == null ? "" : rs_profile.getString("description"));
             response.put("picture", rs_profile.getString("picture") == null ? "" : rs_profile.getString("picture"));
@@ -180,7 +180,7 @@ public class UserController {
             ps_edit.setString(1, bodyObj.getString("firstName"));
             ps_edit.setString(2, bodyObj.getString("lastName"));
             ps_edit.setString(3, bodyObj.getString("gender"));
-            ps_edit.setInt(4, bodyObj.getInt("zipcode"));
+            ps_edit.setString(4, bodyObj.getString("zipcode"));
             ps_edit.setDate(5, sqlDate);
             ps_edit.setString(6, bodyObj.getString("description"));
             ps_edit.setString(7, bodyObj.getString("picture"));
@@ -188,7 +188,7 @@ public class UserController {
             ps_edit.setInt(9, bodyObj.getInt("eat"));
             ps_edit.setInt(10, bodyObj.getInt("neat"));
             ps_edit.setInt(11, bodyObj.getInt("social"));
-            ps_edit.setInt(12, bodyObj.getInt("desiredZipcode"));
+            ps_edit.setString(12, bodyObj.getString("desiredZipcode"));
             ps_edit.setString(13, bodyObj.getString("desiredGender"));
             ps_edit.setInt(14, bodyObj.getInt("minRent"));
             ps_edit.setInt(15, bodyObj.getInt("maxRent"));

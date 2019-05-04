@@ -24,6 +24,8 @@ export class ProfilePageComponent implements OnInit {
         let requestBody = this.user;
         if (this.user.minRent > this.user.maxRent) {
             alert("Minimum Rent should be less than Maximum Rent");
+        } else if (this.user.zipcode.length != 5 || this.user.desiredZipcode.length != 5) {
+            alert("ZIP code should be 5 digits.");
         } else {
             this.jwtService.update(requestBody);
         }

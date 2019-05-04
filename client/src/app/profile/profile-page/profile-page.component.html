@@ -8,7 +8,7 @@
                       <form #f="ngForm" (ngSubmit)="onUpdate()">
                           <div class="login-fields">
                               <mat-form-field>
-                                  <input matInput type="email" [(ngModel)]="user.email" placeholder="Email" name="email" email/>
+                                  <input matInput type="email" [(ngModel)]="user.email" placeholder="Email" name="email" email required/>
                               </mat-form-field>
                               <mat-form-field>
                                   <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="user.password" placeholder="New Password" name="password"/>
@@ -19,55 +19,55 @@
                                   <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                               </mat-form-field>
                               <mat-form-field>
-                                  <input matInput type="text" [(ngModel)]="user.firstName" placeholder="First Name" name="firstName"/>
+                                  <input matInput type="text" [(ngModel)]="user.firstName" placeholder="First Name" name="firstName" required/>
                               </mat-form-field>
                               <mat-form-field>
-                                  <input matInput type="text" [(ngModel)]="user.lastName" placeholder="Last Name" name="lastName"/>
+                                  <input matInput type="text" [(ngModel)]="user.lastName" placeholder="Last Name" name="lastName" required/>
                               </mat-form-field>
                               <mat-form-field>
-                                  <textarea matInput type="text" [(ngModel)]="user.description" placeholder="Description" name="description"></textarea>
+                                  <textarea matInput type="text" [(ngModel)]="user.description" placeholder="Description" name="description" required></textarea>
                               </mat-form-field>
                               <mat-form-field>
                                   <input matInput type="text" [(ngModel)]="user.picture" placeholder="Link to your picture" name="picture"/>
                               </mat-form-field>
                               <mat-form-field>
-                                  <mat-select [(ngModel)]="user.gender" placeholder="Gender" name="gender">
+                                  <mat-select [(ngModel)]="user.gender" placeholder="Gender" name="gender" required>
                                       <mat-option value="m">Male</mat-option>
                                       <mat-option value="f">Female</mat-option>
                                   </mat-select>
                               </mat-form-field>
                               <mat-form-field>
-                                  <input matInput [(ngModel)]="user.birthdate" [matDatepicker]="picker"  placeholder="Birthdate" name="birthdate"/>
+                                  <input matInput [(ngModel)]="user.birthdate" [matDatepicker]="picker"  placeholder="Birthdate" name="birthdate" required/>
                                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                   <mat-datepicker #picker></mat-datepicker>
                               </mat-form-field>
                               <mat-form-field>
-                                  <input matInput type="number" [(ngModel)]="user.zipcode" placeholder="ZIP Code" name="zipcode"/>
+                                  <input matInput type="text" [(ngModel)]="user.zipcode" placeholder="ZIP Code" name="zipcode" required/>
                               </mat-form-field>
-                              <h6>Sleep</h6>
-                              <mat-slider [(ngModel)]="user.sleep" name="sleep" color="primary" thumbLabel tickInterval="1" min="1" max="10"></mat-slider>
-                              <h6>Eat</h6>
-                              <mat-slider [(ngModel)]="user.eat" name="eat" color="primary" thumbLabel tickInterval="1" min="1" max="10"></mat-slider>
-                              <h6>Neat</h6>
-                              <mat-slider [(ngModel)]="user.neat" name="neat" color="primary" thumbLabel tickInterval="1" min="1" max="10"></mat-slider>
-                              <h6>Social</h6>
-                              <mat-slider [(ngModel)]="user.social" name="social" color="primary" thumbLabel tickInterval="1" min="1" max="10"></mat-slider>
+                              <h6>Sleep *</h6>
+                              <mat-slider [(ngModel)]="user.sleep" name="sleep" color="primary" thumbLabel tickInterval="1" min="1" max="10" required></mat-slider>
+                              <h6>Eat *</h6>
+                              <mat-slider [(ngModel)]="user.eat" name="eat" color="primary" thumbLabel tickInterval="1" min="1" max="10" required></mat-slider>
+                              <h6>Neat *</h6>
+                              <mat-slider [(ngModel)]="user.neat" name="neat" color="primary" thumbLabel tickInterval="1" min="1" max="10" required></mat-slider>
+                              <h6>Social *</h6>
+                              <mat-slider [(ngModel)]="user.social" name="social" color="primary" thumbLabel tickInterval="1" min="1" max="10" required></mat-slider>
                               <mat-form-field>
-                                  <input matInput type="number" [(ngModel)]="user.desiredZipcode" placeholder="Desired ZIP Code" name="desiredZipcode"/>
+                                  <input matInput type="text" [(ngModel)]="user.desiredZipcode" placeholder="Desired ZIP Code" name="desiredZipcode" required/>
                               </mat-form-field>
                               <mat-form-field>
-                                  <mat-select [(ngModel)]="user.desiredGender" placeholder="Desired Gender" name="desiredGender">
+                                  <mat-select [(ngModel)]="user.desiredGender" placeholder="Desired Gender" name="desiredGender" required>
                                       <mat-option value="m">Male</mat-option>
                                       <mat-option value="f">Female</mat-option>
                                   </mat-select>
                               </mat-form-field>
-                              <h6>Minimum Rent</h6>
-                              <mat-slider [(ngModel)]="user.minRent" name="minRent" color="primary" thumbLabel tickInterval="100" min="100" max="10000" step="100"></mat-slider>
-                              <h6>Maximum Rent</h6>
-                              <mat-slider [(ngModel)]="user.maxRent" name="maxRent" color="primary" thumbLabel tickInterval="100" min="100" max="10000" step="100"></mat-slider>
+                              <h6>Minimum Rent *</h6>
+                              <mat-slider [(ngModel)]="user.minRent" name="minRent" color="primary" thumbLabel tickInterval="100" min="100" max="10000" step="100" required></mat-slider>
+                              <h6>Maximum Rent *</h6>
+                              <mat-slider [(ngModel)]="user.maxRent" name="maxRent" color="primary" thumbLabel tickInterval="100" min="100" max="10000" step="100" required></mat-slider>
                               <br/>
                               <div class="text-center">
-                                  <button mat-raised-button color="primary" type="submit">Update</button>
+                                  <button mat-raised-button color="primary" type="submit" [disabled]="!f.form.valid">Update</button>
                                   <br/>
                               </div>
                           </div>
