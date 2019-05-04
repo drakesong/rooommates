@@ -211,6 +211,59 @@ public class UserController {
 		return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value="/explore", method=RequestMethod.GET)
+    public ResponseEntity<String> explore(HttpServletRequest request) {
+        PreparedStatement ps_explore = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String desired_gender = request.getParameter("desired_gender");
+        String gender = request.getParameter("gender");
+        String desired_zipcode = request.getParameter("desired_zipcode");
+        String desired_rent = request.getParameter("desired_rent");
+
+        try {
+            String query = "SELECT user_id, first_name, last_name, description, picture, sleep, eat, neat, social FROM users WHERE gender=? AND desired_gender=? AND abs(desired_zipcode-?) < 1000 AND abs(desired_rent-?) < 1000";
+            ps_explore = conn.prepareStatement(query);
+
+            ps_explore.setString(1, desired_gender);
+            ps_explore.setString(2, gender);
+            ps_explore.setString(3, desired_zipcode);
+            ps_explore.setString(4, desired_rent);
+
+            ResultSet rs_explore = ps_explore.executeQuery();
+            JSONArray response = new JSONArray();
+
+            while(rs_explore.next()) {
+                JSONObject temp = new JSONObject();
+                temp.put("userId", rs_explore.getString("user_id") == null ? "" : rs_explore.getString("user_id"));
+                temp.put("firstName", rs_explore.getString("first_name") == null ? "" : rs_explore.getString("first_name"));
+                temp.put("lastName", rs_explore.getString("last_name") == null ? "" : rs_explore.getString("last_name"));
+                temp.put("description", rs_explore.getString("description") == null ? "" : rs_explore.getString("description"));
+                temp.put("picture", rs_explore.getString("picture") == null ? "" : rs_explore.getString("picture"));
+                temp.put("sleep", rs_explore.getString("sleep") == null ? "" : rs_explore.getString("sleep"));
+                temp.put("eat", rs_explore.getString("eat") == null ? "" : rs_explore.getString("eat"));
+                temp.put("neat", rs_explore.getString("neat") == null ? "" : rs_explore.getString("neat"));
+                temp.put("social", rs_explore.getString("social") == null ? "" : rs_explore.getString("social"));
+
+                response.put(temp);
+            }
+
+            ps_explore.close();
+            rs_explore.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
 
     private static void initializeDBConnection() {
         try {

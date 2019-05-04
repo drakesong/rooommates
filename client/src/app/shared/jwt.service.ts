@@ -74,4 +74,19 @@ export class JwtService {
         alert(error.error.message);
       });
   }
+
+  explore(desired_gender: string, gender: string, desired_zipcode: string, desired_rent: string) {
+      const httpOptions = {
+          headers: new HttpHeaders({
+              'Content-Type': 'application/json'
+          }),
+          params: new HttpParams().append('desired_gender', desired_gender).append('gender', gender).append('desired_zipcode', desired_zipcode).append('desired_rent', desired_rent)
+      };
+
+      return this.httpClient.get(environment.API_BASE_URL + "explore", httpOptions).pipe(tap(response => {
+          return response;
+      }, error => {
+          alert(error.error.message);
+      }));
+  }
 }
