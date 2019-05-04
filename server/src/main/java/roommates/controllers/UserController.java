@@ -119,7 +119,7 @@ public class UserController {
         String email = request.getParameter("email");
 
         try {
-			String query = "SELECT first_name, last_name, gender, zipcode, birthdate, description, picture, sleep, eat, neat, social, desired_zipcode, desired_gender, min_rent, max_rent FROM Users WHERE email=?";
+			String query = "SELECT first_name, last_name, gender, zipcode, birthdate, description, picture, sleep, eat, neat, social, desired_zipcode, desired_gender, desired_rent FROM Users WHERE email=?";
             ps_profile = conn.prepareStatement(query);
 
             ps_profile.setString(1, email);
@@ -142,8 +142,7 @@ public class UserController {
             response.put("social", rs_profile.getString("social") == null ? "" : rs_profile.getString("social"));
             response.put("desiredZipcode", rs_profile.getString("desired_zipcode") == null ? "" : rs_profile.getString("desired_zipcode"));
             response.put("desiredGender", rs_profile.getString("desired_gender") == null ? "" : rs_profile.getString("desired_gender"));
-            response.put("minRent", rs_profile.getString("min_rent") == null ? "" : rs_profile.getString("min_rent"));
-            response.put("maxRent", rs_profile.getString("max_rent") == null ? "" : rs_profile.getString("max_rent"));
+            response.put("desiredRent", rs_profile.getString("desired_rent") == null ? "" : rs_profile.getString("desired_rent"));
 
             ps_profile.close();
             rs_profile.close();
@@ -174,7 +173,7 @@ public class UserController {
             java.util.Date date = format.parse(bodyObj.getString("birthdate"));
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
-            String query = "UPDATE Users SET first_name=?, last_name=?, gender=?, zipcode=?, birthdate=?, description=?, picture=?, sleep=?, eat=?, neat=?, social=?, desired_zipcode=?, desired_gender=?, min_rent=?, max_rent=? WHERE email=?";
+            String query = "UPDATE Users SET first_name=?, last_name=?, gender=?, zipcode=?, birthdate=?, description=?, picture=?, sleep=?, eat=?, neat=?, social=?, desired_zipcode=?, desired_gender=?, desired_rent=? WHERE email=?";
             ps_edit = conn.prepareStatement(query);
 
             ps_edit.setString(1, bodyObj.getString("firstName"));
@@ -190,9 +189,8 @@ public class UserController {
             ps_edit.setInt(11, bodyObj.getInt("social"));
             ps_edit.setString(12, bodyObj.getString("desiredZipcode"));
             ps_edit.setString(13, bodyObj.getString("desiredGender"));
-            ps_edit.setInt(14, bodyObj.getInt("minRent"));
-            ps_edit.setInt(15, bodyObj.getInt("maxRent"));
-            ps_edit.setString(16, email);
+            ps_edit.setInt(14, bodyObj.getInt("desiredRent"));
+            ps_edit.setString(15, email);
 
             ps_edit.executeUpdate();
             ps_edit.close();

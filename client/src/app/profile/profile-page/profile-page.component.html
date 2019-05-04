@@ -61,10 +61,8 @@
                                       <mat-option value="f">Female</mat-option>
                                   </mat-select>
                               </mat-form-field>
-                              <h6>Minimum Rent *</h6>
-                              <mat-slider [(ngModel)]="user.minRent" name="minRent" color="primary" thumbLabel tickInterval="100" min="100" max="10000" step="100" required></mat-slider>
-                              <h6>Maximum Rent *</h6>
-                              <mat-slider [(ngModel)]="user.maxRent" name="maxRent" color="primary" thumbLabel tickInterval="100" min="100" max="10000" step="100" required></mat-slider>
+                              <h6>Desired Rent *</h6>
+                              <mat-slider [(ngModel)]="user.desiredRent" name="desiredRent" color="primary" thumbLabel tickInterval="100" min="100" max="3000" step="100" required></mat-slider>
                               <br/>
                               <div class="text-center">
                                   <button mat-raised-button color="primary" type="submit" [disabled]="!f.form.valid">Update</button>
