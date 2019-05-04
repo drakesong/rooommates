@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
     styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent implements OnInit {
-    user: Object;
+    user: any;
     hide = true;
 
     constructor(private jwtService: JwtService) { }
@@ -22,6 +22,10 @@ export class ProfilePageComponent implements OnInit {
 
     onUpdate() {
         let requestBody = this.user;
-        this.jwtService.update(requestBody);
+        if (this.user.minRent > this.user.maxRent) {
+            alert("Minimum Rent should be less than Maximum Rent");
+        } else {
+            this.jwtService.update(requestBody);
+        }
     }
 }
