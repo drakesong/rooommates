@@ -41,7 +41,7 @@ export class ExplorePageComponent implements OnInit {
                       }
                   }
 
-                  this.potential = Object.values(this.potential_list)[this.count];
+                  this.potential = this.potential_list[this.count];
                   console.log(this.potential);
               });
           });
@@ -50,10 +50,16 @@ export class ExplorePageComponent implements OnInit {
   }
 
   like() {
+      let requestBody = this.potential.userId;
+      this.jwtService.like(this.user.userId, requestBody);
       this.count++;
+      this.potential = this.potential_list[this.count];
   }
 
   dislike() {
+      let requestBody = this.potential.userId;
+      this.jwtService.dislike(this.user.userId, requestBody);
       this.count++;
+      this.potential = this.potential_list[this.count];
   }
 }

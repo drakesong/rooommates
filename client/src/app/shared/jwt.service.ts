@@ -110,7 +110,7 @@ export class JwtService {
           headers: new HttpHeaders({
               'Content-Type': 'application/json'
           }),
-          params: new HttpParams().append('email', user_id)
+          params: new HttpParams().append('user_id', user_id)
       };
 
       return this.httpClient.get(environment.API_BASE_URL + "getdislikes", httpOptions).pipe(tap(response => {
@@ -118,5 +118,33 @@ export class JwtService {
       }, error => {
           alert(error.error.message);
       }));
+  }
+
+  like(user_id: string, requestBody: Object) {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        params: new HttpParams().append('user_id', user_id)
+      };
+      return this.httpClient.post(environment.API_BASE_URL + "like", requestBody, httpOptions).subscribe(response => {
+        alert(response['message']);
+      }, error => {
+        alert(error.error.message);
+      });
+  }
+
+  dislike(user_id: string, requestBody: Object) {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        params: new HttpParams().append('user_id', user_id)
+      };
+      return this.httpClient.post(environment.API_BASE_URL + "dislike", requestBody, httpOptions).subscribe(response => {
+        alert(response['message']);
+      }, error => {
+        alert(error.error.message);
+      });
   }
 }

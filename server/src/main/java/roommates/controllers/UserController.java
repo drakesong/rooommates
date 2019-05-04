@@ -340,6 +340,73 @@ public class UserController {
         return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value="/like", method=RequestMethod.POST)
+    public ResponseEntity<String> like(@RequestBody String body, HttpServletRequest request) {
+        PreparedStatement ps_like = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+			String query = "INSERT INTO Likes SET user1_id=?, user2_id=?";
+            ps_like = conn.prepareStatement(query);
+
+            ps_like.setString(1, id);
+            ps_like.setString(2, body);
+
+            ps_like.executeUpdate();
+            responseBody.put("message", "User has been liked.");
+
+            ps_like.close();
+            conn.close();
+
+            return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/dislike", method=RequestMethod.POST)
+    public ResponseEntity<String> dislike(@RequestBody String body, HttpServletRequest request) {
+        PreparedStatement ps_dislike = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+			String query = "INSERT INTO Dislikes SET user1_id=?, user2_id=?";
+            ps_dislike = conn.prepareStatement(query);
+
+            ps_dislike.setString(1, id);
+            ps_dislike.setString(2, body);
+
+            ps_dislike.executeUpdate();
+            responseBody.put("message", "User has been disliked.");
+
+            ps_dislike.close();
+            conn.close();
+
+            return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+
     private static void initializeDBConnection() {
         try {
             File file = new File("../src/main/java/roommates/configs/dbparams.txt");
