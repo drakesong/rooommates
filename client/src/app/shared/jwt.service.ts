@@ -89,4 +89,34 @@ export class JwtService {
           alert(error.error.message);
       }));
   }
+
+  getLikes(user_id: string) {
+      const httpOptions = {
+          headers: new HttpHeaders({
+              'Content-Type': 'application/json'
+          }),
+          params: new HttpParams().append('user_id', user_id)
+      };
+
+      return this.httpClient.get(environment.API_BASE_URL + "getlikes", httpOptions).pipe(tap(response => {
+          return response;
+      }, error => {
+          alert(error.error.message);
+      }));
+  }
+
+  getDislikes(user_id: string) {
+      const httpOptions = {
+          headers: new HttpHeaders({
+              'Content-Type': 'application/json'
+          }),
+          params: new HttpParams().append('email', user_id)
+      };
+
+      return this.httpClient.get(environment.API_BASE_URL + "getdislikes", httpOptions).pipe(tap(response => {
+          return response;
+      }, error => {
+          alert(error.error.message);
+      }));
+  }
 }

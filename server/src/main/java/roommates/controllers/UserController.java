@@ -119,7 +119,7 @@ public class UserController {
         String email = request.getParameter("email");
 
         try {
-			String query = "SELECT first_name, last_name, gender, zipcode, birthdate, description, picture, sleep, eat, neat, social, desired_zipcode, desired_gender, desired_rent FROM Users WHERE email=?";
+			String query = "SELECT first_name, last_name, gender, zipcode, birthdate, description, picture, sleep, eat, neat, social, desired_zipcode, desired_gender, desired_rent, user_id FROM Users WHERE email=?";
             ps_profile = conn.prepareStatement(query);
 
             ps_profile.setString(1, email);
@@ -143,6 +143,7 @@ public class UserController {
             response.put("desiredZipcode", rs_profile.getString("desired_zipcode") == null ? "" : rs_profile.getString("desired_zipcode"));
             response.put("desiredGender", rs_profile.getString("desired_gender") == null ? "" : rs_profile.getString("desired_gender"));
             response.put("desiredRent", rs_profile.getString("desired_rent") == null ? "" : rs_profile.getString("desired_rent"));
+            response.put("userId", rs_profile.getString("user_id"));
 
             ps_profile.close();
             rs_profile.close();
@@ -258,6 +259,80 @@ public class UserController {
 
             return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
         } catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/getlikes", method=RequestMethod.GET)
+    public ResponseEntity<String> getLikes(HttpServletRequest request) {
+        PreparedStatement ps_likes = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+			String query = "SELECT user2_id FROM Likes WHERE user1_id=?";
+            ps_likes = conn.prepareStatement(query);
+
+            ps_likes.setString(1, id);
+
+            ResultSet rs_likes = ps_likes.executeQuery();
+
+            JSONArray response = new JSONArray();
+            while(rs_likes.next()) {
+                response.put(rs_likes.getString("user2_id"));
+            }
+
+            ps_likes.close();
+            rs_likes.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/getdislikes", method=RequestMethod.GET)
+    public ResponseEntity<String> getDislikes(HttpServletRequest request) {
+        PreparedStatement ps_dislikes = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+			String query = "SELECT user2_id FROM Dislikes WHERE user1_id=?";
+            ps_dislikes = conn.prepareStatement(query);
+
+            ps_dislikes.setString(1, id);
+
+            ResultSet rs_dislikes = ps_dislikes.executeQuery();
+
+            JSONArray response = new JSONArray();
+            while(rs_dislikes.next()) {
+                response.put(rs_dislikes.getString("user2_id"));
+            }
+
+            ps_dislikes.close();
+            rs_dislikes.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
             e.printStackTrace();
             responseBody.put("message", "SQLException");
         }
