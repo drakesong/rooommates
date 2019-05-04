@@ -119,7 +119,7 @@ public class UserController {
         String email = request.getParameter("email");
 
         try {
-			String query = "SELECT first_name, last_name, gender, city, state, birthdate, description, sleep, eat, neat, social, desired_city, desired_state, desired_gender, min_rent, max_rent FROM Users WHERE email=?";
+			String query = "SELECT first_name, last_name, gender, zipcode, birthdate, description, picture, sleep, eat, neat, social, desired_zipcode, desired_gender, min_rent, max_rent FROM Users WHERE email=?";
             ps_profile = conn.prepareStatement(query);
 
             ps_profile.setString(1, email);
@@ -132,16 +132,15 @@ public class UserController {
             response.put("firstName", rs_profile.getString("first_name") == null ? "" : rs_profile.getString("first_name"));
             response.put("lastName", rs_profile.getString("last_name") == null ? "" : rs_profile.getString("last_name"));
             response.put("gender", rs_profile.getString("gender") == null ? "" : rs_profile.getString("gender"));
-            response.put("city", rs_profile.getString("city") == null ? "" : rs_profile.getString("city"));
-            response.put("state", rs_profile.getString("state") == null ? "" : rs_profile.getString("state"));
+            response.put("zipcode", rs_profile.getInt("zipcode") == 0 ? "" : rs_profile.getInt("zipcode"));
             response.put("birthdate", rs_profile.getString("birthdate") == null ? "" : rs_profile.getString("birthdate"));
             response.put("description", rs_profile.getString("description") == null ? "" : rs_profile.getString("description"));
+            response.put("picture", rs_profile.getString("picture") == null ? "" : rs_profile.getString("picture"));
             response.put("sleep", rs_profile.getString("sleep") == null ? "" : rs_profile.getString("sleep"));
             response.put("eat", rs_profile.getString("eat") == null ? "" : rs_profile.getString("eat"));
             response.put("neat", rs_profile.getString("neat") == null ? "" : rs_profile.getString("neat"));
             response.put("social", rs_profile.getString("social") == null ? "" : rs_profile.getString("social"));
-            response.put("desiredCity", rs_profile.getString("desired_city") == null ? "" : rs_profile.getString("desired_city"));
-            response.put("desiredState", rs_profile.getString("desired_state") == null ? "" : rs_profile.getString("desired_state"));
+            response.put("desiredZipcode", rs_profile.getString("desired_zipcode") == null ? "" : rs_profile.getString("desired_zipcode"));
             response.put("desiredGender", rs_profile.getString("desired_gender") == null ? "" : rs_profile.getString("desired_gender"));
             response.put("minRent", rs_profile.getString("min_rent") == null ? "" : rs_profile.getString("min_rent"));
             response.put("maxRent", rs_profile.getString("max_rent") == null ? "" : rs_profile.getString("max_rent"));
@@ -175,26 +174,25 @@ public class UserController {
             java.util.Date date = format.parse(bodyObj.getString("birthdate"));
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
-            String query = "UPDATE Users SET first_name=?, last_name=?, gender=?, city=?, state=?, birthdate=?, description=?, sleep=?, eat=?, neat=?, social=?, desired_city=?, desired_state=?, desired_gender=?, min_rent=?, max_rent=? WHERE email=?";
+            String query = "UPDATE Users SET first_name=?, last_name=?, gender=?, zipcode=?, birthdate=?, description=?, picture=?, sleep=?, eat=?, neat=?, social=?, desired_zipcode=?, desired_gender=?, min_rent=?, max_rent=? WHERE email=?";
             ps_edit = conn.prepareStatement(query);
 
             ps_edit.setString(1, bodyObj.getString("firstName"));
             ps_edit.setString(2, bodyObj.getString("lastName"));
             ps_edit.setString(3, bodyObj.getString("gender"));
-            ps_edit.setString(4, bodyObj.getString("city"));
-            ps_edit.setString(5, bodyObj.getString("state"));
-            ps_edit.setDate(6, sqlDate);
-            ps_edit.setString(7, bodyObj.getString("description"));
+            ps_edit.setInt(4, bodyObj.getInt("zipcode"));
+            ps_edit.setDate(5, sqlDate);
+            ps_edit.setString(6, bodyObj.getString("description"));
+            ps_edit.setString(7, bodyObj.getString("picture"));
             ps_edit.setInt(8, bodyObj.getInt("sleep"));
             ps_edit.setInt(9, bodyObj.getInt("eat"));
             ps_edit.setInt(10, bodyObj.getInt("neat"));
             ps_edit.setInt(11, bodyObj.getInt("social"));
-            ps_edit.setString(12, bodyObj.getString("desiredCity"));
-            ps_edit.setString(13, bodyObj.getString("desiredState"));
-            ps_edit.setString(14, bodyObj.getString("desiredGender"));
-            ps_edit.setInt(15, bodyObj.getInt("minRent"));
-            ps_edit.setInt(16, bodyObj.getInt("maxRent"));
-            ps_edit.setString(17, email);
+            ps_edit.setInt(12, bodyObj.getInt("desiredZipcode"));
+            ps_edit.setString(13, bodyObj.getString("desiredGender"));
+            ps_edit.setInt(14, bodyObj.getInt("minRent"));
+            ps_edit.setInt(15, bodyObj.getInt("maxRent"));
+            ps_edit.setString(16, email);
 
             ps_edit.executeUpdate();
             ps_edit.close();
