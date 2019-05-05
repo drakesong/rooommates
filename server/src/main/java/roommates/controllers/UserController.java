@@ -441,6 +441,48 @@ public class UserController {
         return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value="/getmatches", method=RequestMethod.GET)
+    public ResponseEntity<String> getMatches(HttpServletRequest request) {
+        PreparedStatement ps_matches = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+            String query = "SELECT user2_id, first_name, picture, chat_id FROM matches, users WHERE user1_id=? AND user2_id=user_id";
+            ps_matches = conn.prepareStatement(query);
+
+            ps_matches.setString(1, id);
+
+            ResultSet rs_matches = ps_matches.executeQuery();
+            JSONArray response = new JSONArray();
+
+            while(rs_matches.next()) {
+                JSONObject temp = new JSONObject();
+                temp.put("user2Id", rs_matches.getString("user2_id"));
+                temp.put("firstName", rs_matches.getString("first_name"));
+                temp.put("picture", rs_matches.getString("picture"));
+                temp.put("chatId", rs_matches.getString("chat_id"));
+
+                response.put(temp);
+            }
+
+            ps_matches.close();
+            rs_matches.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
 
     private static void initializeDBConnection() {
         try {

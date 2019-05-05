@@ -3,10 +3,8 @@
 </div>
 <div class="list-container">
     <mat-card class="main-card">
-        <mat-selection-list>
-            <mat-list-option>test</mat-list-option>
-            <mat-list-option>test</mat-list-option>
-            <mat-list-option>test</mat-list-option>
+        <mat-selection-list *ngFor="let match of match_list">
+            <mat-list-option>{{match.firstName}}</mat-list-option>
         </mat-selection-list>
     </mat-card>
 </div>

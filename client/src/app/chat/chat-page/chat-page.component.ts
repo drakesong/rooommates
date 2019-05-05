@@ -20,6 +20,7 @@ export class ChatPageComponent implements OnInit, AfterViewInit {
   messages: Message[] = [];
   messageContent: string;
   ioConnection: any;
+  match_list: any;
 
   @ViewChild(MatList, { read: ElementRef }) matList: ElementRef;
   @ViewChild(MatSelectionList) selectionList: MatSelectionList;
@@ -36,6 +37,10 @@ export class ChatPageComponent implements OnInit, AfterViewInit {
               avatar: this.temp_user.picture
           }
           this.initIoConnection();
+
+          this.jwtService.getMatches(this.user.id).subscribe(matches => {
+              this.match_list = Object.values(matches);
+          });
       });
 
       this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
@@ -43,7 +48,6 @@ export class ChatPageComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.matListItems.changes.subscribe(elements => {
-        console.log(this.matListItems);
         this.scrollToBottom();
     });
   }

@@ -160,4 +160,19 @@ export class JwtService {
         alert(error.error.message);
       });
   }
+
+  getMatches(user_id: number) {
+      const httpOptions = {
+          headers: new HttpHeaders({
+              'Content-Type': 'application/json'
+          }),
+          params: new HttpParams().append('user_id', user_id.toString())
+      };
+
+      return this.httpClient.get(environment.API_BASE_URL + "getmatches", httpOptions).pipe(tap(response => {
+          return response;
+      }, error => {
+          alert(error.error.message);
+      }));
+  }
 }
