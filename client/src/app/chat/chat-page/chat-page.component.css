@@ -1,27 +1,46 @@
-[mat-fab] {
-    position: absolute;
-    right: 2%;
-    top: 35px;
-    z-index: 1;
+.banner {
+    background-image: url("/assets/img/antique-communication-connection-207538.jpg");
+    background-size: cover;
+    height: 200px;
+    left: 0;
+    position: relative;
+    top: 0;
+    background-position: 0;
+    width: 100%;
+    text-align: center;
 }
 
-.chat-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
+.title {
+    position: relative;
+    top: 50%;
+    color: white;
+    letter-spacing: 3px;
 }
 
 .chat-input {
     padding-top: 20px;
-    width: 80%;
+    width: 75%;
+}
+
+.chat-container {
+    position: fixed;
+    width: 75%;
+    height: 100%;
+    left: 450px;
+}
+
+.list-container {
+    position: fixed;
+    width: 23.5%;
+    height: 100%;
 }
 
 .chat-list {
     overflow: auto;
     position: fixed;
-    top: 90px;
-    left: 25px;
-    right: 25px;
+    width: 75%;
+    top: 200px;
+    right: 30px;
     bottom: 120px;
 }
 
@@ -34,15 +53,22 @@
 
 .main-card {
     height: 100%;
+    width: 100%;
 }
 
 .chat-footer-container {
-    position:fixed;
-    bottom:25px;
-    left:25px;
-    right:25px;
+    position: fixed;
+    width: 95%;
+    bottom: 25px;
+    left: 450px;
+    right: 25px;
 }
 
-.chat-notification {
-    text-align: center;
+.icon {
+    padding-right: 30px;
+    padding-left: 20px;
+}
+
+::ng-deep.mat-pseudo-checkbox{
+    display: none !important;
 }
