@@ -21,6 +21,7 @@ export class ChatPageComponent implements OnInit, AfterViewInit {
   messageContent: string;
   ioConnection: any;
   match_list: any;
+  chat_id: any;
 
   @ViewChild(MatList, { read: ElementRef }) matList: ElementRef;
   @ViewChild(MatSelectionList) selectionList: MatSelectionList;
@@ -74,10 +75,20 @@ export class ChatPageComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    let requestBody = {
+        "user_id": this.user.id,
+        "chat_id": this.chat_id,
+        "message": message
+    };
+
     this.socketService.send({
       from: this.user,
       content: message
-    });
+    }, requestBody);
     this.messageContent = null;
+  }
+
+  private select(match: any) {
+      this.chat_id = match.chatId;
   }
 }

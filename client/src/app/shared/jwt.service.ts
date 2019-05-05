@@ -175,4 +175,18 @@ export class JwtService {
           alert(error.error.message);
       }));
   }
+
+  message(requestBody: Object) {
+      const httpOptions = {
+          headers: new HttpHeaders({
+              'Content-Type': 'application/json'
+          })
+      };
+      console.log(requestBody);
+      return this.httpClient.post(environment.API_BASE_URL + "message", requestBody, httpOptions).subscribe(response => {
+          alert(response['message']);
+      }, error => {
+          alert(error.error.message);
+      });
+  }
 }

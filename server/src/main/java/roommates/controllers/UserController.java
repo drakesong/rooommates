@@ -505,6 +505,63 @@ public class UserController {
         return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value="/message", method=RequestMethod.POST)
+    public ResponseEntity<String> message(@RequestBody String body, HttpServletRequest request) {
+        System.out.println("hello");
+        PreparedStatement ps_message = null;
+        PreparedStatement ps_message_id = null;
+        PreparedStatement ps_chatroom = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        try {
+            JSONObject bodyObj = new JSONObject(body);
+			String query_message = "INSERT INTO Messages SET user_id=?, message=?";
+            ps_message = conn.prepareStatement(query_message);
+
+            ps_message.setInt(1, Integer.parseInt(bodyObj.getString("user_id")));
+            ps_message.setString(2, bodyObj.getString("message"));
+
+            ps_message.executeUpdate();
+            ps_message.close();
+
+            String query_message_id = "SELECT message_id FROM Messages WHERE user_id=? AND message=?";
+            ps_message_id = conn.prepareStatement(query_message_id);
+
+            ps_message_id.setInt(1, Integer.parseInt(bodyObj.getString("user_id")));
+            ps_message_id.setString(2, bodyObj.getString("message"));
+
+            ResultSet rs_message_id = ps_message_id.executeQuery();
+            rs_message_id.next();
+            int message_id = rs_message_id.getInt("message_id");
+
+            ps_message_id.close();
+            rs_message_id.close();
+
+            String query_chatroom = "INSERT INTO Chatrooms SET chat_id=?, message_id=?";
+            ps_chatroom = conn.prepareStatement(query_chatroom);
+
+            ps_chatroom.setInt(1, Integer.parseInt(bodyObj.getString("chat_id")));
+            ps_chatroom.setInt(2, message_id);
+
+            ps_chatroom.executeUpdate();
+            ps_chatroom.close();
+
+            responseBody.put("message", "Message has been saved.");
+            conn.close();
+
+            return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
     private static void initializeDBConnection() {
         try {
             File file = new File("../src/main/java/roommates/configs/dbparams.txt");
