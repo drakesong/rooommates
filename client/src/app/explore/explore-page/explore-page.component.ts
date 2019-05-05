@@ -52,14 +52,22 @@ export class ExplorePageComponent implements OnInit {
   like() {
       let requestBody = this.potential.userId;
       this.jwtService.like(this.user.userId, requestBody);
-      this.count++;
+      if (this.count == this.potential_list.length) {
+          alert("You are out of potential matches.");
+      } else {
+          this.count++;
+      }
       this.potential = this.potential_list[this.count];
   }
 
   dislike() {
       let requestBody = this.potential.userId;
       this.jwtService.dislike(this.user.userId, requestBody);
-      this.count++;
+      if (this.count == this.potential_list.length) {
+          alert("You are out of potential matches.");
+      } else {
+          this.count++;
+      }
       this.potential = this.potential_list[this.count];
   }
 }
