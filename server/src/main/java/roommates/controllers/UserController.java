@@ -406,6 +406,41 @@ public class UserController {
         return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value="/match", method=RequestMethod.POST)
+    public ResponseEntity<String> match(@RequestBody String body, HttpServletRequest request) {
+        PreparedStatement ps_match = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        try {
+            JSONObject bodyObj = new JSONObject(body);
+            String user1_id = bodyObj.getString("user1_id");
+            String user2_id = bodyObj.getString("user2_id");
+
+            String query = "INSERT INTO Matches SET user1_id=?, user2_id=?";
+            ps_match = conn.prepareStatement(query);
+
+            ps_match.setString(1, user1_id);
+            ps_match.setString(2, user2_id);
+
+            ps_match.executeUpdate();
+            responseBody.put("message", "You have a match!");
+
+            ps_match.close();
+            conn.close();
+
+            return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.OK);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
 
     private static void initializeDBConnection() {
         try {

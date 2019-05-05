@@ -14,6 +14,7 @@ export class ExplorePageComponent implements OnInit {
   count: number = 0;
   likes: any;
   dislikes: any;
+  potential_likes: any;
 
   constructor(private jwtService: JwtService) { }
 
@@ -52,6 +53,17 @@ export class ExplorePageComponent implements OnInit {
   like() {
       let requestBody = this.potential.userId;
       this.jwtService.like(this.user.userId, requestBody);
+      this.jwtService.getLikes(this.potential.userId).subscribe(likes => {
+          this.potential_likes = Object.values(likes);
+          if (this.potential_likes.includes(this.user.userId)) {
+              const requestBody = {
+                  user1_id: this.user.userId,
+                  user2_id: this.potential.userId
+              };
+              this.jwtService.match(requestBody);
+          }
+      })
+
       if (this.count == this.potential_list.length) {
           alert("You are out of potential matches.");
       } else {

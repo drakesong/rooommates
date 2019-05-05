@@ -147,4 +147,17 @@ export class JwtService {
         alert(error.error.message);
       });
   }
+
+  match(requestBody: Object) {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      return this.httpClient.post(environment.API_BASE_URL + "match", requestBody, httpOptions).subscribe(response => {
+        alert(response['message']);
+      }, error => {
+        alert(error.error.message);
+      });
+  }
 }
