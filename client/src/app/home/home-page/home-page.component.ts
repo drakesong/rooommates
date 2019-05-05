@@ -12,4 +12,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
   }
 
+  checkLoggedIn() {
+      return localStorage.getItem('access_token') !== null;
+  }
 }
