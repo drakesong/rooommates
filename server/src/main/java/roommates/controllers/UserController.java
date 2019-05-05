@@ -443,7 +443,8 @@ public class UserController {
 
     @RequestMapping(value="/getmatches", method=RequestMethod.GET)
     public ResponseEntity<String> getMatches(HttpServletRequest request) {
-        PreparedStatement ps_matches = null;
+        PreparedStatement ps_matches1 = null;
+        PreparedStatement ps_matches2 = null;
         HttpHeaders responseHeader = new HttpHeaders();
         JSONObject responseBody = new JSONObject();
 
@@ -453,26 +454,46 @@ public class UserController {
         String id = request.getParameter("user_id");
 
         try {
-            String query = "SELECT user2_id, first_name, picture, chat_id FROM matches, users WHERE user1_id=? AND user2_id=user_id";
-            ps_matches = conn.prepareStatement(query);
+            String query1 = "SELECT user2_id, first_name, picture, chat_id FROM matches, users WHERE user1_id=? AND user2_id=user_id";
+            ps_matches1 = conn.prepareStatement(query1);
 
-            ps_matches.setString(1, id);
+            ps_matches1.setString(1, id);
 
-            ResultSet rs_matches = ps_matches.executeQuery();
+            ResultSet rs_matches1 = ps_matches1.executeQuery();
             JSONArray response = new JSONArray();
 
-            while(rs_matches.next()) {
+            while(rs_matches1.next()) {
                 JSONObject temp = new JSONObject();
-                temp.put("user2Id", rs_matches.getString("user2_id"));
-                temp.put("firstName", rs_matches.getString("first_name"));
-                temp.put("picture", rs_matches.getString("picture"));
-                temp.put("chatId", rs_matches.getString("chat_id"));
+                temp.put("userId", rs_matches1.getString("user2_id"));
+                temp.put("firstName", rs_matches1.getString("first_name"));
+                temp.put("picture", rs_matches1.getString("picture"));
+                temp.put("chatId", rs_matches1.getString("chat_id"));
 
                 response.put(temp);
             }
 
-            ps_matches.close();
-            rs_matches.close();
+            ps_matches1.close();
+            rs_matches1.close();
+
+            String query = "SELECT user1_id, first_name, picture, chat_id FROM matches, users WHERE user2_id=? AND user1_id=user_id";
+            ps_matches2 = conn.prepareStatement(query);
+
+            ps_matches2.setString(1, id);
+
+            ResultSet rs_matches2 = ps_matches2.executeQuery();
+
+            while(rs_matches2.next()) {
+                JSONObject temp = new JSONObject();
+                temp.put("userId", rs_matches2.getString("user1_id"));
+                temp.put("firstName", rs_matches2.getString("first_name"));
+                temp.put("picture", rs_matches2.getString("picture"));
+                temp.put("chatId", rs_matches2.getString("chat_id"));
+
+                response.put(temp);
+            }
+
+            ps_matches2.close();
+            rs_matches2.close();
             conn.close();
 
             return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
