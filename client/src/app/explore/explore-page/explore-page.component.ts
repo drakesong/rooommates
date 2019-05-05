@@ -21,20 +21,16 @@ export class ExplorePageComponent implements OnInit {
   ngOnInit() {
       this.jwtService.getProfile().subscribe(profile => {
           this.user = profile;
-          console.log(this.user);
 
           this.jwtService.getLikes(this.user.userId).subscribe(likes => {
               this.likes = Object.values(likes);
-              console.log(this.likes);
 
               this.jwtService.getDislikes(this.user.userId).subscribe(dislikes => {
                   this.dislikes = Object.values(dislikes);
-                  console.log(this.dislikes);
               });
 
               this.jwtService.explore(this.user.desiredGender, this.user.gender, this.user.desiredZipcode, this.user.desiredRent).subscribe(list => {
                   this.potential_list = Object.values(list);
-                  console.log(this.potential_list);
 
                   for (var i = 0; i < this.potential_list.length; i++) {
                       if (this.likes.includes(this.potential_list[i].userId) || this.dislikes.includes(this.potential_list[i].userId)) {
@@ -43,7 +39,6 @@ export class ExplorePageComponent implements OnInit {
                   }
 
                   this.potential = this.potential_list[this.count];
-                  console.log(this.potential);
               });
           });
 
