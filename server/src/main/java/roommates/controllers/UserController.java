@@ -119,7 +119,7 @@ public class UserController {
         String email = request.getParameter("email");
 
         try {
-			String query = "SELECT first_name, last_name, gender, zipcode, birthdate, description, picture, sleep, eat, neat, social, desired_zipcode, desired_gender, min_rent, max_rent FROM Users WHERE email=?";
+			String query = "SELECT first_name, last_name, gender, zipcode, birthdate, description, picture, sleep, eat, neat, social, desired_zipcode, desired_gender, desired_rent, user_id FROM Users WHERE email=?";
             ps_profile = conn.prepareStatement(query);
 
             ps_profile.setString(1, email);
@@ -132,7 +132,7 @@ public class UserController {
             response.put("firstName", rs_profile.getString("first_name") == null ? "" : rs_profile.getString("first_name"));
             response.put("lastName", rs_profile.getString("last_name") == null ? "" : rs_profile.getString("last_name"));
             response.put("gender", rs_profile.getString("gender") == null ? "" : rs_profile.getString("gender"));
-            response.put("zipcode", rs_profile.getInt("zipcode") == 0 ? "" : rs_profile.getInt("zipcode"));
+            response.put("zipcode", rs_profile.getString("zipcode") == null ? "" : rs_profile.getString("zipcode"));
             response.put("birthdate", rs_profile.getString("birthdate") == null ? "" : rs_profile.getString("birthdate"));
             response.put("description", rs_profile.getString("description") == null ? "" : rs_profile.getString("description"));
             response.put("picture", rs_profile.getString("picture") == null ? "" : rs_profile.getString("picture"));
@@ -142,8 +142,8 @@ public class UserController {
             response.put("social", rs_profile.getString("social") == null ? "" : rs_profile.getString("social"));
             response.put("desiredZipcode", rs_profile.getString("desired_zipcode") == null ? "" : rs_profile.getString("desired_zipcode"));
             response.put("desiredGender", rs_profile.getString("desired_gender") == null ? "" : rs_profile.getString("desired_gender"));
-            response.put("minRent", rs_profile.getString("min_rent") == null ? "" : rs_profile.getString("min_rent"));
-            response.put("maxRent", rs_profile.getString("max_rent") == null ? "" : rs_profile.getString("max_rent"));
+            response.put("desiredRent", rs_profile.getString("desired_rent") == null ? "" : rs_profile.getString("desired_rent"));
+            response.put("userId", rs_profile.getString("user_id"));
 
             ps_profile.close();
             rs_profile.close();
@@ -174,13 +174,13 @@ public class UserController {
             java.util.Date date = format.parse(bodyObj.getString("birthdate"));
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
-            String query = "UPDATE Users SET first_name=?, last_name=?, gender=?, zipcode=?, birthdate=?, description=?, picture=?, sleep=?, eat=?, neat=?, social=?, desired_zipcode=?, desired_gender=?, min_rent=?, max_rent=? WHERE email=?";
+            String query = "UPDATE Users SET first_name=?, last_name=?, gender=?, zipcode=?, birthdate=?, description=?, picture=?, sleep=?, eat=?, neat=?, social=?, desired_zipcode=?, desired_gender=?, desired_rent=? WHERE email=?";
             ps_edit = conn.prepareStatement(query);
 
             ps_edit.setString(1, bodyObj.getString("firstName"));
             ps_edit.setString(2, bodyObj.getString("lastName"));
             ps_edit.setString(3, bodyObj.getString("gender"));
-            ps_edit.setInt(4, bodyObj.getInt("zipcode"));
+            ps_edit.setString(4, bodyObj.getString("zipcode"));
             ps_edit.setDate(5, sqlDate);
             ps_edit.setString(6, bodyObj.getString("description"));
             ps_edit.setString(7, bodyObj.getString("picture"));
@@ -188,11 +188,10 @@ public class UserController {
             ps_edit.setInt(9, bodyObj.getInt("eat"));
             ps_edit.setInt(10, bodyObj.getInt("neat"));
             ps_edit.setInt(11, bodyObj.getInt("social"));
-            ps_edit.setInt(12, bodyObj.getInt("desiredZipcode"));
+            ps_edit.setString(12, bodyObj.getString("desiredZipcode"));
             ps_edit.setString(13, bodyObj.getString("desiredGender"));
-            ps_edit.setInt(14, bodyObj.getInt("minRent"));
-            ps_edit.setInt(15, bodyObj.getInt("maxRent"));
-            ps_edit.setString(16, email);
+            ps_edit.setInt(14, bodyObj.getInt("desiredRent"));
+            ps_edit.setString(15, email);
 
             ps_edit.executeUpdate();
             ps_edit.close();
@@ -211,6 +210,235 @@ public class UserController {
         }
 
 		return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/explore", method=RequestMethod.GET)
+    public ResponseEntity<String> explore(HttpServletRequest request) {
+        PreparedStatement ps_explore = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String desired_gender = request.getParameter("desired_gender");
+        String gender = request.getParameter("gender");
+        String desired_zipcode = request.getParameter("desired_zipcode");
+        String desired_rent = request.getParameter("desired_rent");
+
+        try {
+            String query = "SELECT user_id, first_name, last_name, description, picture, sleep, eat, neat, social FROM users WHERE gender=? AND desired_gender=? AND abs(desired_zipcode-?) < 1000 AND abs(desired_rent-?) < 1000";
+            ps_explore = conn.prepareStatement(query);
+
+            ps_explore.setString(1, desired_gender);
+            ps_explore.setString(2, gender);
+            ps_explore.setString(3, desired_zipcode);
+            ps_explore.setString(4, desired_rent);
+
+            ResultSet rs_explore = ps_explore.executeQuery();
+            JSONArray response = new JSONArray();
+
+            while(rs_explore.next()) {
+                JSONObject temp = new JSONObject();
+                temp.put("userId", rs_explore.getString("user_id") == null ? "" : rs_explore.getString("user_id"));
+                temp.put("firstName", rs_explore.getString("first_name") == null ? "" : rs_explore.getString("first_name"));
+                temp.put("lastName", rs_explore.getString("last_name") == null ? "" : rs_explore.getString("last_name"));
+                temp.put("description", rs_explore.getString("description") == null ? "" : rs_explore.getString("description"));
+                temp.put("picture", rs_explore.getString("picture") == null ? "" : rs_explore.getString("picture"));
+                temp.put("sleep", rs_explore.getString("sleep") == null ? "" : rs_explore.getString("sleep"));
+                temp.put("eat", rs_explore.getString("eat") == null ? "" : rs_explore.getString("eat"));
+                temp.put("neat", rs_explore.getString("neat") == null ? "" : rs_explore.getString("neat"));
+                temp.put("social", rs_explore.getString("social") == null ? "" : rs_explore.getString("social"));
+
+                response.put(temp);
+            }
+
+            ps_explore.close();
+            rs_explore.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/getlikes", method=RequestMethod.GET)
+    public ResponseEntity<String> getLikes(HttpServletRequest request) {
+        PreparedStatement ps_likes = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+			String query = "SELECT user2_id FROM Likes WHERE user1_id=?";
+            ps_likes = conn.prepareStatement(query);
+
+            ps_likes.setString(1, id);
+
+            ResultSet rs_likes = ps_likes.executeQuery();
+
+            JSONArray response = new JSONArray();
+            while(rs_likes.next()) {
+                response.put(rs_likes.getString("user2_id"));
+            }
+
+            ps_likes.close();
+            rs_likes.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/getdislikes", method=RequestMethod.GET)
+    public ResponseEntity<String> getDislikes(HttpServletRequest request) {
+        PreparedStatement ps_dislikes = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+			String query = "SELECT user2_id FROM Dislikes WHERE user1_id=?";
+            ps_dislikes = conn.prepareStatement(query);
+
+            ps_dislikes.setString(1, id);
+
+            ResultSet rs_dislikes = ps_dislikes.executeQuery();
+
+            JSONArray response = new JSONArray();
+            while(rs_dislikes.next()) {
+                response.put(rs_dislikes.getString("user2_id"));
+            }
+
+            ps_dislikes.close();
+            rs_dislikes.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/like", method=RequestMethod.POST)
+    public ResponseEntity<String> like(@RequestBody String body, HttpServletRequest request) {
+        PreparedStatement ps_like = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+			String query = "INSERT INTO Likes SET user1_id=?, user2_id=?";
+            ps_like = conn.prepareStatement(query);
+
+            ps_like.setString(1, id);
+            ps_like.setString(2, body);
+
+            ps_like.executeUpdate();
+            responseBody.put("message", "User has been liked.");
+
+            ps_like.close();
+            conn.close();
+
+            return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/dislike", method=RequestMethod.POST)
+    public ResponseEntity<String> dislike(@RequestBody String body, HttpServletRequest request) {
+        PreparedStatement ps_dislike = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+			String query = "INSERT INTO Dislikes SET user1_id=?, user2_id=?";
+            ps_dislike = conn.prepareStatement(query);
+
+            ps_dislike.setString(1, id);
+            ps_dislike.setString(2, body);
+
+            ps_dislike.executeUpdate();
+            responseBody.put("message", "User has been disliked.");
+
+            ps_dislike.close();
+            conn.close();
+
+            return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/match", method=RequestMethod.POST)
+    public ResponseEntity<String> match(@RequestBody String body, HttpServletRequest request) {
+        PreparedStatement ps_match = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        try {
+            JSONObject bodyObj = new JSONObject(body);
+            String user1_id = bodyObj.getString("user1_id");
+            String user2_id = bodyObj.getString("user2_id");
+
+            String query = "INSERT INTO Matches SET user1_id=?, user2_id=?";
+            ps_match = conn.prepareStatement(query);
+
+            ps_match.setString(1, user1_id);
+            ps_match.setString(2, user2_id);
+
+            ps_match.executeUpdate();
+            responseBody.put("message", "You have a match!");
+
+            ps_match.close();
+            conn.close();
+
+            return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.OK);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
 
