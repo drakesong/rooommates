@@ -184,7 +184,7 @@ export class JwtService {
       };
       console.log(requestBody);
       return this.httpClient.post(environment.API_BASE_URL + "message", requestBody, httpOptions).subscribe(response => {
-          alert(response['message']);
+          // alert(response['message']);
       }, error => {
           alert(error.error.message);
       });
