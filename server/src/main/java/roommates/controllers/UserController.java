@@ -441,6 +441,168 @@ public class UserController {
         return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value="/getmatches", method=RequestMethod.GET)
+    public ResponseEntity<String> getMatches(HttpServletRequest request) {
+        PreparedStatement ps_matches1 = null;
+        PreparedStatement ps_matches2 = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        String id = request.getParameter("user_id");
+
+        try {
+            String query1 = "SELECT user2_id, first_name, picture, chat_id FROM matches, users WHERE user1_id=? AND user2_id=user_id";
+            ps_matches1 = conn.prepareStatement(query1);
+
+            ps_matches1.setString(1, id);
+
+            ResultSet rs_matches1 = ps_matches1.executeQuery();
+            JSONArray response = new JSONArray();
+
+            while(rs_matches1.next()) {
+                JSONObject temp = new JSONObject();
+                temp.put("userId", rs_matches1.getString("user2_id"));
+                temp.put("firstName", rs_matches1.getString("first_name"));
+                temp.put("picture", rs_matches1.getString("picture"));
+                temp.put("chatId", rs_matches1.getString("chat_id"));
+
+                response.put(temp);
+            }
+
+            ps_matches1.close();
+            rs_matches1.close();
+
+            String query = "SELECT user1_id, first_name, picture, chat_id FROM matches, users WHERE user2_id=? AND user1_id=user_id";
+            ps_matches2 = conn.prepareStatement(query);
+
+            ps_matches2.setString(1, id);
+
+            ResultSet rs_matches2 = ps_matches2.executeQuery();
+
+            while(rs_matches2.next()) {
+                JSONObject temp = new JSONObject();
+                temp.put("userId", rs_matches2.getString("user1_id"));
+                temp.put("firstName", rs_matches2.getString("first_name"));
+                temp.put("picture", rs_matches2.getString("picture"));
+                temp.put("chatId", rs_matches2.getString("chat_id"));
+
+                response.put(temp);
+            }
+
+            ps_matches2.close();
+            rs_matches2.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/message", method=RequestMethod.POST)
+    public ResponseEntity<String> message(@RequestBody String body, HttpServletRequest request) {
+        PreparedStatement ps_message = null;
+        PreparedStatement ps_message_id = null;
+        PreparedStatement ps_chatroom = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        try {
+            JSONObject bodyObj = new JSONObject(body);
+			String query_message = "INSERT INTO Messages SET user_id=?, message=?";
+            ps_message = conn.prepareStatement(query_message);
+
+            ps_message.setInt(1, Integer.parseInt(bodyObj.getString("user_id")));
+            ps_message.setString(2, bodyObj.getString("message"));
+
+            ps_message.executeUpdate();
+            ps_message.close();
+
+            String query_message_id = "SELECT message_id FROM Messages WHERE user_id=? AND message=?";
+            ps_message_id = conn.prepareStatement(query_message_id);
+
+            ps_message_id.setInt(1, Integer.parseInt(bodyObj.getString("user_id")));
+            ps_message_id.setString(2, bodyObj.getString("message"));
+
+            ResultSet rs_message_id = ps_message_id.executeQuery();
+            rs_message_id.next();
+            int message_id = rs_message_id.getInt("message_id");
+
+            ps_message_id.close();
+            rs_message_id.close();
+
+            String query_chatroom = "INSERT INTO Chatrooms SET chat_id=?, message_id=?";
+            ps_chatroom = conn.prepareStatement(query_chatroom);
+
+            ps_chatroom.setInt(1, Integer.parseInt(bodyObj.getString("chat_id")));
+            ps_chatroom.setInt(2, message_id);
+
+            ps_chatroom.executeUpdate();
+            ps_chatroom.close();
+
+            responseBody.put("message", "Message has been saved.");
+            conn.close();
+
+            return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/getmessages", method=RequestMethod.GET)
+    public ResponseEntity<String> getMessages(HttpServletRequest request) {
+        PreparedStatement ps_messages = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+        JSONArray response = new JSONArray();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        try {
+            int chat_id = Integer.parseInt(request.getParameter("chat_id"));
+            String query_message_id = "SELECT Chatrooms.message_id, message, Messages.user_id, first_name, picture FROM Chatrooms, Messages, Users WHERE chat_id=? AND Chatrooms.message_id=Messages.message_id AND Messages.user_id=Users.user_id ORDER BY Chatrooms.message_id ASC";
+            ps_messages = conn.prepareStatement(query_message_id);
+
+            ps_messages.setInt(1, chat_id);
+
+            ResultSet rs_messages = ps_messages.executeQuery();
+
+            while(rs_messages.next()) {
+                JSONObject temp = new JSONObject();
+                temp.put("messageId", rs_messages.getString("Chatrooms.message_id"));
+                temp.put("message", rs_messages.getString("message"));
+                temp.put("userId", rs_messages.getString("Messages.user_id"));
+                temp.put("firstName", rs_messages.getString("first_name"));
+                temp.put("picture", rs_messages.getString("picture"));
+
+                response.put(temp);
+            }
+
+            ps_messages.close();
+            rs_messages.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
 
     private static void initializeDBConnection() {
         try {
