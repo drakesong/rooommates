@@ -128,7 +128,7 @@ export class JwtService {
         params: new HttpParams().append('user_id', user_id)
       };
       return this.httpClient.post(environment.API_BASE_URL + "like", requestBody, httpOptions).subscribe(response => {
-        alert(response['message']);
+        // alert(response['message']);
       }, error => {
         alert(error.error.message);
       });
@@ -142,7 +142,7 @@ export class JwtService {
         params: new HttpParams().append('user_id', user_id)
       };
       return this.httpClient.post(environment.API_BASE_URL + "dislike", requestBody, httpOptions).subscribe(response => {
-        alert(response['message']);
+        // alert(response['message']);
       }, error => {
         alert(error.error.message);
       });

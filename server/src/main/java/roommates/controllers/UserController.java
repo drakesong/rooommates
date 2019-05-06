@@ -606,7 +606,7 @@ public class UserController {
 
     private static void initializeDBConnection() {
         try {
-            File file = new File("../src/main/java/roommates/configs/dbparams.txt");
+            File file = new File("./src/main/java/roommates/configs/dbparams.txt");
             Scanner sc = new Scanner(file);
             try {
                 final String USER = sc.nextLine();
