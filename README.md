@@ -18,7 +18,7 @@ In order to locally run these components, you must meet the following pre-requis
 * [MySQL](https://www.mysql.com/downloads/) @8.0.15
 
 ### Client
-After cloning the repository, go into `.../roommates/client` and run `npm install` to install all the required packages. When that is complete, run `ng s` and navigate to `http://localhost:4200/`. Edit *environment.ts* located in `.../roommates/client/src/environments` as needed with *API_BASE_URL* and *CHAT_URL* created by running the two major components below.
+After cloning the repository, go into `.../roommates/client` and run `npm install` to install all the required packages. When that is complete, run `ng s` and navigate to `http://localhost:4200/`. Edit *environment.ts* located in `.../roommates/client/src/environments` as needed with *API_BASE_URL (default: http://localhost:8080/) [note: there is a forward slash at the end]* and *CHAT_URL (default: http://localhost:8888) [note: there is NO forward slash at the end]* created by running the two major components below.
 
 ### Server
 Navigate to `.../roommates/server`. Edit the *dbparams.txt* file located at `.../roommates/server/src/main/java/roommates/configs` with the first line having *Username* and second line having *Password* to local MySQL database. Go back to `.../roommates/server` and run `mvn package`. Then run `java -jar target/roommates-0.1.0.jar`.
