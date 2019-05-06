@@ -87,3 +87,6 @@ FOREIGN KEY (user2_id) REFERENCES Users(user_id));
 ```
 
 Afterwards, clone the following repository: `https://github.com/drakesong/roommates_database.git`. Edit the *dbparams.txt* file located at `.../roommates_database/src/main/java/roommates_database/configs` with the first line having *Username* and second line having *Password* to local MySQL database. Go back to `.../roommates_database` and run `mvn package`. Then run `java -jar target/roommates_database-0.1.0.jar` which populates the *User* table with 5000 mock users (*will take awhile*).
+
+### Limitations
+Due to the non-perfect set up of asynchronous operations within the client, there are times at which an error occurs when making API calls but a quick refresh will solve the problem.
