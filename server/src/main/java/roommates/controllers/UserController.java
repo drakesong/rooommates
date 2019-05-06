@@ -507,7 +507,6 @@ public class UserController {
 
     @RequestMapping(value="/message", method=RequestMethod.POST)
     public ResponseEntity<String> message(@RequestBody String body, HttpServletRequest request) {
-        System.out.println("hello");
         PreparedStatement ps_message = null;
         PreparedStatement ps_message_id = null;
         PreparedStatement ps_chatroom = null;
