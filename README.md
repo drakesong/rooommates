@@ -3,7 +3,7 @@ For finding the perfect roommate. A full stack web development project using Ang
 
 
 ## How to run
-There are three main components to this project:
+There are four main components to this project:
 * Client
 * Server
 * Chat Server
@@ -21,7 +21,7 @@ In order to locally run these components, you must meet the following pre-requis
 After cloning the repository, go into `.../roommates/client` and run `npm install` to install all the required packages. When that is complete, run `ng s` and navigate to `http://localhost:4200/`. Edit *environment.ts* located in `.../roommates/client/src/environments` as needed with *API_BASE_URL* and *CHAT_URL* created by running the two major components below.
 
 ### Server
-Navigate to `.../roommates/server`. Edit the *dbparams.txt* located at `.../roommates/server/src/main/java/roommates/configs` with the first line having *Username* and second line having *Password* to MySQL database. Go back to `.../roommates/server` and run `mvn package`. Then run `java -jar target/roommates-0.1.0.jar`.
+Navigate to `.../roommates/server`. Edit the *dbparams.txt* file located at `.../roommates/server/src/main/java/roommates/configs` with the first line having *Username* and second line having *Password* to local MySQL database. Go back to `.../roommates/server` and run `mvn package`. Then run `java -jar target/roommates-0.1.0.jar`.
 
 ### Chat Server
 Navigate to `.../roommates/chat_server` and run `npm install` and `gulp build`. Then run `node dist/index.js`.
@@ -84,5 +84,6 @@ CREATE TABLE Dislikes
 user2_id INT NOT NULL,
 FOREIGN KEY (user1_id) REFERENCES Users(user_id),
 FOREIGN KEY (user2_id) REFERENCES Users(user_id));
-
 ```
+
+Afterwards, clone the following repository: `https://github.com/drakesong/roommates_database.git`. Edit the *dbparams.txt* file located at `.../roommates_database/src/main/java/roommates_database/configs` with the first line having *Username* and second line having *Password* to local MySQL database. Go back to `.../roommates_database` and run `mvn package`. Then run `java -jar target/roommates_database-0.1.0.jar` which populates the *User* table with 5000 mock users (*will take awhile*).
