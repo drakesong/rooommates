@@ -561,6 +561,49 @@ public class UserController {
         return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value="/getmessages", method=RequestMethod.GET)
+    public ResponseEntity<String> getMessages(HttpServletRequest request) {
+        PreparedStatement ps_messages = null;
+        HttpHeaders responseHeader = new HttpHeaders();
+        JSONObject responseBody = new JSONObject();
+        JSONArray response = new JSONArray();
+
+        responseHeader.set("Content-Type", "application/json");
+        initializeDBConnection();
+
+        try {
+            int chat_id = Integer.parseInt(request.getParameter("chat_id"));
+            String query_message_id = "SELECT Chatrooms.message_id, message, Messages.user_id, first_name, picture FROM Chatrooms, Messages, Users WHERE chat_id=? AND Chatrooms.message_id=Messages.message_id AND Messages.user_id=Users.user_id ORDER BY Chatrooms.message_id ASC";
+            ps_messages = conn.prepareStatement(query_message_id);
+
+            ps_messages.setInt(1, chat_id);
+
+            ResultSet rs_messages = ps_messages.executeQuery();
+
+            while(rs_messages.next()) {
+                JSONObject temp = new JSONObject();
+                temp.put("messageId", rs_messages.getString("Chatrooms.message_id"));
+                temp.put("message", rs_messages.getString("message"));
+                temp.put("userId", rs_messages.getString("Messages.user_id"));
+                temp.put("firstName", rs_messages.getString("first_name"));
+                temp.put("picture", rs_messages.getString("picture"));
+
+                response.put(temp);
+            }
+
+            ps_messages.close();
+            rs_messages.close();
+            conn.close();
+
+            return new ResponseEntity(response.toString(), responseHeader, HttpStatus.OK);
+		} catch(SQLException e) {
+            e.printStackTrace();
+            responseBody.put("message", "SQLException");
+        }
+
+        return new ResponseEntity(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+    }
+
     private static void initializeDBConnection() {
         try {
             File file = new File("../src/main/java/roommates/configs/dbparams.txt");

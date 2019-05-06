@@ -89,6 +89,26 @@ export class ChatPageComponent implements OnInit, AfterViewInit {
   }
 
   private select(match: any) {
+      let temp_list: Message[] = [];
       this.chat_id = match.chatId;
+      this.jwtService.getMessages(this.chat_id).subscribe(messagesList => {
+          let temp = Object.values(messagesList);
+
+          temp.forEach(function(obj) {
+              let temp_user: User = {
+                  "id": obj.userId,
+                  "name": obj.firstName,
+                  "avatar": obj.picture
+              };
+              let temp_message: Message = {
+                  "from": temp_user,
+                  "content": obj.message
+              };
+
+              temp_list.push(temp_message);
+          });
+          this.messages = temp_list;
+      })
+
   }
 }

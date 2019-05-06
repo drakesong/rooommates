@@ -189,4 +189,18 @@ export class JwtService {
           alert(error.error.message);
       });
   }
+
+  getMessages(chat_id: string) {
+      const httpOptions = {
+          headers: new HttpHeaders({
+              'Content-Type': 'application/json'
+          }),
+          params: new HttpParams().append('chat_id', chat_id)
+      };
+      return this.httpClient.get(environment.API_BASE_URL + "getmessages", httpOptions).pipe(tap(response => {
+          return response;
+      }, error => {
+          alert(error.error.message);
+      }));
+  }
 }
