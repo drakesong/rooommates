@@ -1,6 +1,8 @@
 # Roommates
-For finding the perfect roommate. A full stack web development project using Angular 7 and Spring Boot. [Demo](https://youtu.be/i7wIfvfyUcQ).
+For finding the perfect roommate. A full stack web development project using Angular 7 and Spring Boot.
 
+## Demo
+[![Demo](http://img.youtube.com/vi/i7wIfvfyUcQ/1.jpg)](http://www.youtube.com/watch?v=i7wIfvfyUcQ)
 
 ## How to run
 There are four main components to this project:
