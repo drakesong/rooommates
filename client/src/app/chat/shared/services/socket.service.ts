@@ -22,6 +22,10 @@ export class SocketService {
         this.socket.emit('message', message);
     }
 
+    public join(message: Message): void {
+        this.socket.emit('join', message);
+    }
+
     public onMessage(): Observable<Message> {
         return new Observable<Message>(observer => {
             this.socket.on('message', (data: Message) => observer.next(data));

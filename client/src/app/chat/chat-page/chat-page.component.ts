@@ -111,5 +111,9 @@ export class ChatPageComponent implements OnInit, AfterViewInit {
           this.messages = temp_list;
       })
 
+      this.socketService.join({
+          from: this.user,
+          chatId: this.chat_id
+      });
   }
 }

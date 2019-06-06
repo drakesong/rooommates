@@ -45,7 +45,7 @@ export class ChatServer {
         this.io.on('connect', (socket: any) => {
             console.log('Connected client on port %s.', this.port);
 
-            socket.on('message', (m: Message) => {
+            socket.on('join', (m: Message) => {
                 if (this.chatId != m.chatId) {
                     if (this.chatId != null) {
                         socket.leave(this.chatId);
@@ -55,7 +55,9 @@ export class ChatServer {
                     this.chatId = m.chatId;
                     socket.join(m.chatId);
                 }
+            });
 
+            socket.on('message', (m: Message) => {
                 console.log('[server](message): %s', JSON.stringify(m));
                 this.io.to(m.chatId).emit('message', m);
             });
